@@ -1,0 +1,770 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"region",
+				"regionTransformer"
+			],
+			[
+				"res",
+				"responseData"
+			],
+			[
+				"code",
+				"codeTransformer"
+			],
+			[
+				"isn",
+				"is_null"
+			],
+			[
+				"offer",
+				"offerTypeTransformer"
+			],
+			[
+				"cate",
+				"category"
+			],
+			[
+				"categ",
+				"categoryTransformer"
+			],
+			[
+				"respo",
+				"respond"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 8358,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "node_modules/axios/index.js",
+			"settings":
+			{
+				"buffer_size": 40,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/PROJECTS/vue/index.html",
+			"settings":
+			{
+				"buffer_size": 2218,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 856.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/E/PROJECTS/vue/trakt",
+		"/E/PROJECTS/vue/trakt/node_modules",
+		"/E/PROJECTS/vue/trakt/node_modules/axios",
+		"/E/PROJECTS/vue/trakt/node_modules/axios/lib",
+		"/E/PROJECTS/vue/trakt/node_modules/vue-router",
+		"/E/PROJECTS/vue/trakt/node_modules/vue-router/dist"
+	],
+	"file_history":
+	[
+		"/E/PROJECTS/dnomikos/passata.html",
+		"/E/PROJECTS/dnomikos/tomatopaste.html",
+		"/E/PROJECTS/dnomikos/pizzasauce.html",
+		"/E/PROJECTS/dnomikos/wp-content/themes/jupiter-child/style.css",
+		"/E/PROJECTS/dnomikos/wp-content/themes/jupiter/views/header/toolbar/wpml-nav.php",
+		"/E/PROJECTS/dnomikos/wp-config.php",
+		"/E/PROJECTS/dnomikos/wp-config-sample.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/DealController.php",
+		"/E/PROJECTS/laravel/Cyta/public/front/js/sitescript.js",
+		"/E/PROJECTS/laravel/Cyta/database/seeds/DatabaseSeeder.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/StoreController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/CountyTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/RegionTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/StoreTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_06_19_141551_add_fields_to_deals.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Deal.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/DealTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Region.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Store.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/County.php",
+		"/E/PROJECTS/laravel/Cyta/routes/api.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/CountyController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/RegionWithStoreTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/Transformer.php",
+		"/C/Users/Alex/AppData/Roaming/Kodi/addons/plugin.video.exodus/resources/lib/modules/trakt.py",
+		"/E/PROJECTS/laravel/Cyta/resources/lang/el/messages.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/DealCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/public/front/index.html",
+		"/C/Users/Alex/Downloads/nestle_greek_infographics/index.html",
+		"/C/Users/Alex/Downloads/nestle_greek_infographics/js/3main.js",
+		"/C/Users/Alex/Downloads/nestle_v1306 (1)/index.html",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Client/ClientController.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/soon.html",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/StoreCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/backpack/crud/src/PanelTraits/Fields.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/backpack/crud/src/PanelTraits/Create.php",
+		"/E/PROJECTS/laravel/Cyta/routes/web.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Client/AuthController.php",
+		"/E/PROJECTS/laravel/Cyta/resources/assets/js/app.js",
+		"/E/PROJECTS/laravel/Cyta/resources/views/client/oauth.blade.php",
+		"/E/PROJECTS/laravel/Cyta/app/Providers/AuthServiceProvider.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/header-1.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/custom.css",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/style 2.css",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/UserCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_05_04_132407_add_region_to_store.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Requests/RegionRequest.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Requests/CountyRequest.php",
+		"/E/PROJECTS/laravel/Cyta/app/User.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/CountyCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/RegionCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/resources/views/vendor/backpack/base/inc/sidebar.blade.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_05_04_123811_create_regions_table.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_05_04_122450_create_counties_table.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/CampaignManager.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/backpack/crud/src/app/Http/Controllers/CrudController.php",
+		"/E/PROJECTS/laravel/Cyta/resources/views/vendor/backpack/crud/fields/map.blade.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/all.js",
+		"/E/PROJECTS/laravel/Cyta/vendor/symfony/translation/MessageSelector.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_04_25_192615_add_user_to_deal.php",
+		"/E/PROJECTS/laravel/Cyta/app/Role.php",
+		"/E/PROJECTS/laravel/Cyta/app/Scopes/RoleScope.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/backpack/permissionmanager/src/app/Models/Role.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/index.html",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/main.js",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/form.php",
+		"/C/Users/Alex/Downloads/recaptcha-php-1.11/example-captcha.php",
+		"/C/Users/Alex/Downloads/recaptcha-php-1.11/example-mailhide.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/shortcodes.js",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-3/post.php",
+		"/E/PROJECTS/laravel/Cyta/resources/views/client/report.blade.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_03_08_131237_update_field_names_for_codes_transcations_redemptions_tables.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_03_01_125411_create_transactions_table.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_01_24_204506_create_codes_table.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_02_08_210137_create_redemptions_table.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Kernel.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/CodeController.php",
+		"/E/PROJECTS/laravel/Cyta/database/seeds/SettingsTableSeeder.php",
+		"/E/PROJECTS/laravel/Cyta/app/Exceptions/Handler.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/ApiController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/CodeTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/RedemptionTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Code.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_03_09_111438_add_expired_at_column_to_codes.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Redemption.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/DayController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/OfferTypeController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/ChannelController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/CompanyController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/CategoryController.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Middleware/ValidateHeaders.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/ChannelTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Channel.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Category.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Day.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Offer_Type.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Admin/ChannelCrudController.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php",
+		"/E/PROJECTS/laravel/Cyta/database/migrations/2017_03_19_135733_add_active_to_channels.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/search.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/fullwidth.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/single.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/page.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/header.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/searchform.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/footer.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/index.php",
+		"/C/Users/Alex/AppData/Local/Temp/fz3temp-2/functions.php",
+		"/E/PROJECTS/laravel/Cyta/app/Http/Controllers/Api/V1/ReceiverController.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/studio-42/elfinder/Changelog",
+		"/E/PROJECTS/laravel/Cyta/vendor/laravel/framework/src/Illuminate/Support/Facades/Input.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/CompanyTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/PeriodTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Transformers/DayTransformer.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Period.php",
+		"/E/PROJECTS/laravel/Cyta/app/Models/Status.php",
+		"/E/PROJECTS/laravel/Cyta/app/Traits/RestTrait.php",
+		"/C/Users/Alex/Downloads/db.sql",
+		"/E/PROJECTS/TenFour/dnomikos/wp-config.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/symfony/debug/Exception/FatalThrowableError.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/symfony/debug/ExceptionHandler.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/laravel/framework/src/Illuminate/Database/Eloquent/ModelNotFoundException.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/symfony/http-kernel/Exception/NotFoundHttpException.php",
+		"/E/PROJECTS/laravel/Cyta/vendor/symfony/debug/Exception/OutOfMemoryException.php",
+		"/E/PROJECTS/laravel/Cyta/app/Traits/RestExceptionHandlerTrait.php",
+		"/E/PROJECTS/laravel/Cyta/config/app.php",
+		"/E/PROJECTS/laravel/Cyta/database/seeds/DayTableSeeder.php"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 96.0,
+		"where_history":
+		[
+			"E:\\PROJECTS\\dnomikos\\wp-content\\themes\\jupiter\\views\\header",
+			"E:\\PROJECTS\\laravel\\Cyta\\app",
+			"E:\\PROJECTS\\laravel\\Cyta\\vendor\\backpack",
+			"E:\\PROJECTS\\laravel\\Cyta\\vendor\\backpack\\base",
+			"E:\\PROJECTS\\laravel\\Cyta\\resources\\views"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"stringifyQuery",
+			"item.year",
+			"this",
+			"searchTrakt",
+			"for",
+			"box",
+			"trakt-movie",
+			"var",
+			"tvbanner",
+			"popularList",
+			"movieList",
+			"poster",
+			"tvbanner",
+			"tvposter",
+			"tvthumb",
+			"seasonthumb",
+			"seasonposter",
+			"hdtvlogo",
+			"that",
+			"_",
+			"instance",
+			"li",
+			".products_menu li {\n    position: relative;\n    display: inline;\n    float: left;\n    margin: 0;\n    padding: 0;\n}",
+			"mk_page_section",
+			"tabs",
+			"mk_page_section",
+			"vc_tab",
+			"vc_column_inner",
+			"vc_row_inner",
+			"pastasauce",
+			"mk-page-section-inner",
+			"vc_tab",
+			"c_ta",
+			"tabs",
+			"vc_tab",
+			"mk_page_section",
+			"pizza",
+			"vc_tab",
+			"tomatopaste",
+			"#tomato",
+			"mk-language-nav",
+			"$county",
+			"county",
+			"active",
+			"category",
+			"deal",
+			"changeCategory",
+			"$store",
+			"companyTransformer",
+			"$region",
+			"$category",
+			"category",
+			"companies",
+			"County",
+			"$company",
+			"Company",
+			"companies",
+			"q",
+			"activ",
+			"slide",
+			"./",
+			"c6c6c6",
+			"Region",
+			"region",
+			"Region",
+			"region",
+			"Region",
+			"text-transform: uppercase;",
+			"upper",
+			"county",
+			"company",
+			"day_id",
+			"counties",
+			"zoon",
+			"lat",
+			"type",
+			"form-group col-md-12",
+			"text",
+			"input",
+			"$field['label']",
+			"'company_id'",
+			"q2",
+			"where",
+			"channels",
+			"jQuery.post(action, {\n\n\t\t\tname: jQuery('#name').val(),\n\n\t\t\temail: jQuery('#email').val(),\n\n\t\t\tmessage: jQuery('#message').val()\n\n\t\t},",
+			"data",
+			".ajax",
+			"ajax",
+			"ahax",
+			"big",
+			"ajax",
+			"reca",
+			"var_d",
+			"(",
+			"setStatus",
+			"->respondWithError",
+			"redemptions",
+			"companyTransformer",
+			"periodTransformer",
+			"companyTransformer",
+			"valid_to",
+			"valid_from",
+			"channel_id",
+			"offer_type_id",
+			"name",
+			"categoryTransformer",
+			"deals",
+			"companyTransformer",
+			"dealTransformer",
+			"Deal",
+			"deal",
+			"Deal",
+			"deal",
+			"Deal",
+			"deal",
+			"Deal",
+			"deal",
+			"deals",
+			"company_id",
+			"data",
+			"offer_type_id",
+			"deal",
+			"Deal",
+			"deal",
+			"deals",
+			"channel",
+			"channels",
+			"channelTransformer"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8358,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1547,
+								1547
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 340.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "node_modules/axios/index.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 40,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/E/PROJECTS/vue/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								260,
+								271
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 240.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 130.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "trakt.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"api.",
+				"routes\\api.php"
+			],
+			[
+				"messag",
+				"resources\\lang\\el\\messages.php"
+			],
+			[
+				"authc",
+				"app\\Http\\Controllers\\Client\\AuthController.php"
+			],
+			[
+				"authser",
+				"app\\Providers\\AuthServiceProvider.php"
+			],
+			[
+				"web",
+				"routes\\web.php"
+			],
+			[
+				"side",
+				"resources\\views\\vendor\\backpack\\base\\inc\\sidebar.blade.php"
+			],
+			[
+				"essages",
+				"vendor\\symfony\\translation\\MessageSelector.php"
+			],
+			[
+				"messa",
+				"resources\\lang\\el\\messages.php"
+			],
+			[
+				"channelcon",
+				"app\\Http\\Controllers\\Api\\V1\\ChannelController.php"
+			],
+			[
+				"offer",
+				"app\\Http\\Controllers\\Api\\V1\\OfferTypeController.php"
+			],
+			[
+				"apv1da",
+				"app\\Http\\Controllers\\Api\\V1\\DayController.php"
+			],
+			[
+				"apv1sto",
+				"app\\Http\\Controllers\\Api\\V1\\StoreController.php"
+			],
+			[
+				"apvcateg",
+				"app\\Http\\Controllers\\Api\\V1\\CategoryController.php"
+			],
+			[
+				"apdeal",
+				"app\\Http\\Controllers\\Api\\V1\\DealController.php"
+			],
+			[
+				"kernel",
+				"app\\Http\\Kernel.php"
+			],
+			[
+				"apdealcontro",
+				"app\\Http\\Controllers\\Api\\V1\\DealController.php"
+			],
+			[
+				"han",
+				"app\\Exceptions\\Handler.php"
+			],
+			[
+				"handle",
+				"app\\Exceptions\\Handler.php"
+			],
+			[
+				"hang",
+				"vendor\\studio-42\\elfinder\\Changelog"
+			],
+			[
+				"capp",
+				"config\\app.php"
+			],
+			[
+				"throttle",
+				"vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php"
+			],
+			[
+				"app.",
+				"config\\app.php"
+			],
+			[
+				"routese",
+				"app\\Providers\\RouteServiceProvider.php"
+			],
+			[
+				"databse",
+				"database\\seeds\\DatabaseSeeder.php"
+			],
+			[
+				"api",
+				"routes\\api.php"
+			],
+			[
+				"apicodec",
+				"app\\Http\\Controllers\\Api\\V1\\CodeController.php"
+			],
+			[
+				"clientcon",
+				"app\\Http\\Controllers\\Client\\ClientController.php"
+			],
+			[
+				"login.blade",
+				"vendor\\backpack\\base\\src\\resources\\views\\auth\\login.blade.php"
+			],
+			[
+				"alerts.bl",
+				"vendor\\backpack\\base\\src\\resources\\views\\inc\\alerts.blade.php"
+			],
+			[
+				"alert.bl",
+				"resources\\views\\vendor\\backpack\\base\\inc\\alerts.blade.php"
+			],
+			[
+				"layout",
+				"vendor\\backpack\\base\\src\\resources\\views\\layout.blade.php"
+			],
+			[
+				"sidebar",
+				"resources\\views\\vendor\\backpack\\base\\inc\\sidebar.blade.php"
+			],
+			[
+				"web.php",
+				"routes\\web.php"
+			],
+			[
+				"map_pre",
+				"resources\\views\\vendor\\backpack\\crud\\buttons\\map_preview.blade.php"
+			],
+			[
+				"usercrudco",
+				"app\\Http\\Controllers\\Admin\\UserCrudController.php"
+			],
+			[
+				"userre",
+				"app\\Http\\Requests\\UserRequest.php"
+			],
+			[
+				"compancrudc",
+				"app\\Http\\Controllers\\Admin\\CompanyCrudController.php"
+			],
+			[
+				"dealcr",
+				"app\\Http\\Controllers\\Admin\\DealCrudController.php"
+			],
+			[
+				"storecr",
+				"app\\Http\\Controllers\\Admin\\StoreCrudController.php"
+			],
+			[
+				"message",
+				"resources\\lang\\el\\messages.php"
+			],
+			[
+				"dashb",
+				"resources\\views\\vendor\\backpack\\base\\dashboard.blade.php"
+			],
+			[
+				"codecr",
+				"app\\Http\\Controllers\\Admin\\CodeCrudController.php"
+			],
+			[
+				"map_prev",
+				"resources\\views\\vendor\\backpack\\crud\\buttons\\map_preview.blade.php"
+			],
+			[
+				"companycr",
+				"app\\Http\\Controllers\\Admin\\CompanyCrudController.php"
+			],
+			[
+				"dataseed",
+				"database\\seeds\\DatabaseSeeder.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"E:\\PROJECTS\\GreenCola\\greencola.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 461.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
