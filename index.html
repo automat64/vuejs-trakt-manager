@@ -10,287 +10,284 @@
   <link rel="stylesheet" type="text/css" href="node_modules/bulma/css/bulma.css">
 </head>
 <body>
-	<div id="app">
-		<!-- <trakt-authorize v-bind:trakt-url="traktUrl"/> -->
-    	<router-view></router-view>
+    <div id="app">
+        <router-view></router-view>
     </div>
     <template id="trakt-authorize-template"/>
-    	<div>
-    		<a :href="traktUrl">Authorize??</a>
-    	</div>
+        <div>
+            <a :href="traktUrl">Authorize??</a>
+        </div>
     </template>
     <template id="trakt-app-template">
-    	<div class="columns">
-			<div class="column">
-				<div class="box">
-					<div class="title has-text-centered">POPULAR</div>
-					<trakt-show
-						v-for="item in popularList"
-						v-bind:movie="item"
-						v-bind:key="item.ids.imdb">
-					</trakt-show>
-				</div>
-			</div>
-			<div class="column">
-				<div class="box">
-					<div class="title has-text-centered">TRENDING</div>
-					<trakt-show
-						v-for="item in trendingList"
-						v-bind:movie="item"
-						v-bind:key="item.ids.imdb">
-					</trakt-show>
-					</div>
-				</div>
-			<div class="column">
-				<div class="field has-addons">
-					<p class="control is-expanded has-icons-left has-icons-right">
-						<input class="input" v-model="searchString" v-on:keyup.enter="searchTrakt" placeholder="Enter text">
-						<span class="icon is-left">
-							<i class="fa fa-search"></i>
-						</span>
-						<span v-if="searching" class="icon is-right">
-							<i class="fa fa-hourglass"></i>
-						</span>
-					</p>
-					<p class="control">
-						<a class="button is-info" v-on:click="searchTrakt">Search</a>
-					</p>
-			</div>
-				<div class="box">
-					<div class="title has-text-centered">RESULTS</div>
-					<trakt-show
-						v-for="item in searchResults"
-						v-bind:movie="item"
-						v-bind:key="item.ids.imdb">
-					</trakt-show>
-				</div>
-			</div>
-	    </div>
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <div class="title has-text-centered">POPULAR</div>
+                    <trakt-show
+                        v-for="item in popularList"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <div class="title has-text-centered">TRENDING</div>
+                    <trakt-show
+                        v-for="item in trendingList"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                    </div>
+                </div>
+            <div class="column">
+                <div class="field has-addons">
+                    <p class="control is-expanded has-icons-left has-icons-right">
+                        <input class="input" v-model="searchString" v-on:keyup.enter="searchTrakt" placeholder="Enter text">
+                        <span class="icon is-left">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <span v-if="searching" class="icon is-right">
+                            <i class="fa fa-hourglass"></i>
+                        </span>
+                    </p>
+                    <p class="control">
+                        <a class="button is-info" v-on:click="searchTrakt">Search</a>
+                    </p>
+            </div>
+                <div class="box">
+                    <div class="title has-text-centered">RESULTS</div>
+                    <trakt-show
+                        v-for="item in searchResults"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                </div>
+            </div>
+        </div>
     </template>
     <script>
-	    const client_id = "ca9dff34914b04651bad7540e573ea6ba39c41e6d7e4772522b96119a62606a2";
-	    const client_secret = "cb43efe2160ba0a3a9602b4da0efbf33c97ffccccd1c238cc73c83eb82aeb478";
-	    const redirect_uri = "http://trakt.localhost/authorize";
+        const client_id = "ca9dff34914b04651bad7540e573ea6ba39c41e6d7e4772522b96119a62606a2";
+        const client_secret = "cb43efe2160ba0a3a9602b4da0efbf33c97ffccccd1c238cc73c83eb82aeb478";
+        const redirect_uri = "http://trakt.localhost/authorize";
 
-	    const axios_trakt = axios.create({
-		    baseURL: 'https://api.trakt.tv',
-		    timeout: 5000,
-		    headers: {
-		        'Content-type': 'application/json',
-		        'trakt-api-key': 'ca9dff34914b04651bad7540e573ea6ba39c41e6d7e4772522b96119a62606a2',
-		        'trakt-api-version': 2
-		    }
-	    });
-	    const axios_fanart = axios.create({
-		    baseURL: 'http://webservice.fanart.tv/v3/',
-		    timeout: 15000,
-		    headers: {
-		        /*'client-key': 'a90da1673943ed58d466f207e12668cd',
-		        'api-key': "3e53bdae664d5e570691c6c95becc11e"*/
-		    }
-	    });
-    	const TraktAuthorize = Vue.component('trakt-authorize', {
-    		name: 'TraktAuthorize',
-    	    template: '#trakt-authorize-template',
-    	    data: function() {
-    	    	return {
-	    		    traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri,
-	    		};
-    	    },
-    	    created: function () {
-    	    	code = this.$route.query.code;
-    	    	if (code) {
-	    	    	axios_trakt({
-		                method: 'post',
-		                url: 'oauth/token',
-		                data: {
-		              		code: code,
-		              		client_id: client_id,
-		              		client_secret: client_secret,
-		              		redirect_uri: redirect_uri,
-		              		grant_type: "authorization_code"
+        const axios_trakt = axios.create({
+            baseURL: 'https://api.trakt.tv',
+            timeout: 5000,
+            headers: {
+                'Content-type': 'application/json',
+                'trakt-api-key': 'ca9dff34914b04651bad7540e573ea6ba39c41e6d7e4772522b96119a62606a2',
+                'trakt-api-version': 2
+            }
+        });
+        const axios_fanart = axios.create({
+            baseURL: 'http://webservice.fanart.tv/v3/',
+            timeout: 15000,
+            headers: {
+                /*'client-key': 'a90da1673943ed58d466f207e12668cd',
+                'api-key': "3e53bdae664d5e570691c6c95becc11e"*/
+            }
+        });
+        const TraktAuthorize = Vue.component('trakt-authorize', {
+            name: 'TraktAuthorize',
+            template: '#trakt-authorize-template',
+            data: function() {
+                return {
+                    traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri,
+                };
+            },
+            created: function () {
+                code = this.$route.query.code;
+                if (code) {
+                    axios_trakt({
+                        method: 'post',
+                        url: 'oauth/token',
+                        data: {
+                            code: code,
+                            client_id: client_id,
+                            client_secret: client_secret,
+                            redirect_uri: redirect_uri,
+                            grant_type: "authorization_code"
 
-		              }
-		            }).then(function (response) {
-			            localStorage.setItem('access_token', response['data']['access_token']);
-			            localStorage.setItem('refresh_token', response['data']['refresh_token']);
-			            router.push("/");
-		            })
-		            .catch(function (error) {
-		              router.push("/authorize");
-		            }); 
-		        }
-    	    },
-    	});
-    	const TraktApp = Vue.component('trakt-app', {
-    		name: 'TraktApp',
-	    	template: '#trakt-app-template',
-	    	props: ['traktUrl'],
-	    	data: function () {
-	    		return {
-					greeting: 'Welcome to your Vue.js app!',
-					popularList: [
-					],
-					trendingList: [
-					],
-					searchResults: [],
-					showInfo: [],
-					searchString: '',
-					searching: false,
-		    	};
-		    },
-		      methods: {
-		    	searchTrakt: function () {
-		    	  	let that = this;
-					if (this.searchString.length<3) {
-						this.searchResults = [];
-					}
-					else {
-						this.searching=true;
-						axios_trakt({
-							method: 'get',
-							url: 'search/show?query='+this.searchString,
-							data: {
+                      }
+                    }).then(function (response) {
+                        localStorage.setItem('access_token', response['data']['access_token']);
+                        localStorage.setItem('refresh_token', response['data']['refresh_token']);
+                        router.push("/");
+                    })
+                    .catch(function (error) {
+                        router.push("/authorize");
+                    }); 
+                }
+            },
+        });
+        const TraktApp = Vue.component('trakt-app', {
+            name: 'TraktApp',
+            template: '#trakt-app-template',
+            props: ['traktUrl'],
+            data: function () {
+                return {
+                    greeting: 'Welcome to your Vue.js app!',
+                    popularList: [
+                    ],
+                    trendingList: [
+                    ],
+                    searchResults: [],
+                    showInfo: [],
+                    searchString: '',
+                    searching: false,
+                };
+            },
+              methods: {
+                searchTrakt: function () {
+                    let that = this;
+                    if (this.searchString.length<3) {
+                        this.searchResults = [];
+                    }
+                    else {
+                        this.searching=true;
+                        axios_trakt({
+                            method: 'get',
+                            url: 'search/show?query='+this.searchString,
+                            data: {
 
-							}
-						}).then(function (response) {
-							let list = [];
+                            }
+                        }).then(function (response) {
+                            let list = [];
 
-							for (let item of response.data) {
-							list.push(item.show);
-							}
-							that.searchResults=list;
-							that.searching=false;
+                            for (let item of response.data) {
+                                list.push(item.show);
+                            }
+                            
+                            that.searchResults=list;
+                            that.searching=false;
 
-						})
-						.catch(function (error) {
-							console.log(error);
-							that.searching=false;
-						});
-					}
-		    	}
-		      }, 
-	    	created: function () {
-		    	console.log("main template loaded");  
-		    	let access_token = localStorage.getItem('access_token');
-		    	let refresh_token = localStorage.getItem('refresh_token');
-		    	if (!refresh_token) {
-		    		router.push("/authorize");
-		    	}
-		    	else {
-	    	    	axios_trakt({
-		              method: 'post',
-		              url: 'oauth/token',
-		              data: {
-		              		refresh_token: refresh_token,
-		              		client_id: client_id,
-		              		client_secret: client_secret,
-		              		redirect_uri: "http://trakt.localhost/",
-		              		grant_type: "refresh_token"
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            that.searching=false;
+                        });
+                    }
+                }
+              }, 
+            created: function () {
+                console.log("main template loaded");  
+                let access_token = localStorage.getItem('access_token');
+                let refresh_token = localStorage.getItem('refresh_token');
+                if (!refresh_token) {
+                    router.push("/authorize");
+                }
+                else {
+                    axios_trakt({
+                      method: 'post',
+                      url: 'oauth/token',
+                      data: {
+                            refresh_token: refresh_token,
+                            client_id: client_id,
+                            client_secret: client_secret,
+                            redirect_uri: "http://trakt.localhost/",
+                            grant_type: "refresh_token"
 
-		              }
-		            }).then(function (response) {
-		              console.log(response['data']);
-		              localStorage.setItem('access_token', response['data']['access_token']);
-		              localStorage.setItem('refresh_token', response['data']['refresh_token']);
-		              
-		            })
-		            .catch(function (error) {
-		              router.push("/authorize");
-		            }); 
-		    	}
-		    	q = this.$route.params.code;
-		    	console.log(q);  
-		    	var that = this;
+                      }
+                    }).then(function (response) {
+                      console.log(response['data']);
+                      localStorage.setItem('access_token', response['data']['access_token']);
+                      localStorage.setItem('refresh_token', response['data']['refresh_token']);
+                      
+                    })
+                    .catch(function (error) {
+                      router.push("/authorize");
+                    }); 
+                }
+                q = this.$route.params.code;
+                console.log(q);  
+                var that = this;
 
-		    	axios_trakt({
-		    	  method: 'get',
-		    	  url: 'shows/popular?extended=full',
-		    	  data: {
+                axios_trakt({
+                    method: 'get',
+                    url: 'shows/popular?extended=full',
+                    data: {
 
-		    	  }
-		    	}).then(function (response) {
-		    	  that.popularList=response.data;
-		    	})
-		    	.catch(function (error) {
-		    	  console.log(error);
-		    	});
+                    }
+                }).then(function (response) {
+                    that.popularList=response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
-		    	axios_trakt({
-		    	  method: 'get',
-		    	  url: 'shows/trending?extended=full',
-		    	  data: {
+                axios_trakt({
+                    method: 'get',
+                    url: 'shows/trending?extended=full',
+                    data: {
 
-		    	  }
-		    	}).then(function (response) {
-		    	  let list = [];
-		    	  
-		    	  for (let item of response.data) {
-		    		list.push(item.show);
-		    	  }
-		    	  that.trendingList=list;//[response.data[0]['show'],response.data[2]['show'],response.data[1]['show'],response.data[3]['show']];
-		    	})
-		    	.catch(function (error) {
-		    	  console.log(error);
-		    	});
-		    },
-    	})
+                    }
+                }).then(function (response) {
+                    let list = [];
 
-    	Vue.component('trakt-show', {
-    	  // The todo-item component now accepts a
-    	  // "prop", which is like a custom attribute.
-    	  // This prop is called todo.
-    	  props: ['movie'],
-    	  data: function () {
-    	    return {
-    	      photo:'',
-    	      imdb_link:'#',
-    	    };
-    	  },
-    	  template: '<div class="columns">'
-    	              +'<div class="column ">'
-    	                +'<img v-bind:src="photo">'
-    	              +'</div>'
-    	              +'<div class="column ">'
-    	              +  '<div class="">{{ movie.title }}</div>'
-    	              +  '<div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a v-bind:href="movie.trailer" target="_blank">Trailer</a></div>'
-    	              +'</div>'
-    	            +'</div>',
-    	  mounted: function () {
-    	      var that = this;
-    	      this.imdb_link="http://www.imdb.com/title/"+this.movie.ids.imdb+"/";
-    	      //alert(this.movie.title);  
-    	      axios_fanart({
-    	        method: 'get',
-    	        url: 'tv/'+this.movie.ids.tvdb+'?api_key=3e53bdae664d5e570691c6c95becc11e&client_key=a90da1673943ed58d466f207e12668cd',
-    	      }).then(function (response) {
-    	        //console.log(response.data.tvbanner[0].url);
-    	        that.photo=response.data.tvbanner[0].url;
-    	      })
-    	      .catch(function (error) {
-    	        console.log(error);
-    	      });
-    	      //alert(this.movie.title);
-    	  }
-    	});
+                    for (let item of response.data) {
+                        list.push(item.show);
+                    }
+                    that.trendingList=list;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+        })
 
-    	var router = new VueRouter({
-	        mode: 'history',
-	        base: "/",
-	        routes: [
-	          {name:'main_app' ,path: '/', component: TraktApp},
-	          {path: '/authorize', component: TraktAuthorize},
-	          {path: '/authorize/:code', component: TraktAuthorize},
-	        ]
-	    });
-    	var app = new Vue({
-    		el: '#app',
-    		router: router,
-    	    created: function () {
-    	    	//console.log(this.traktUrl);  
-    	    	//router.push('/authorize');
-    	    },
-    	});
+        Vue.component('trakt-show', {
+          
+            props: ['movie'],
+            data: function () {
+                return {
+                  photo:'',
+                  imdb_link:'#',
+                };
+            },
+            template: '<div class="columns">'
+                        +'<div class="column ">'
+                          +'<img v-bind:src="photo">'
+                        +'</div>'
+                        +'<div class="column ">'
+                        +  '<div class="">{{ movie.title }}</div>'
+                        +  '<div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a v-bind:href="movie.trailer" target="_blank">Trailer</a></div>'
+                        +'</div>'
+                     +'</div>',
+            mounted: function () {
+                var that = this;
+                this.imdb_link="http://www.imdb.com/title/"+this.movie.ids.imdb+"/";
+                //alert(this.movie.title);  
+                axios_fanart({
+                    method: 'get',
+                    url: 'tv/'+this.movie.ids.tvdb+'?api_key=3e53bdae664d5e570691c6c95becc11e&client_key=a90da1673943ed58d466f207e12668cd',
+                }).then(function (response) {
+                    //console.log(response.data.tvbanner[0].url);
+                    that.photo=response.data.tvbanner[0].url;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+
+        var router = new VueRouter({
+            mode: 'history',
+            base: "/",
+            routes: [
+              {name:'main_app' ,path: '/', component: TraktApp},
+              {path: '/authorize', component: TraktAuthorize},
+              {path: '/authorize/:code', component: TraktAuthorize},
+            ]
+        });
+        var app = new Vue({
+            el: '#app',
+            router: router,
+            created: function () {
+                //console.log(this.traktUrl);  
+                //router.push('/authorize');
+            },
+        });
     </script>
 </body>
 </html>
