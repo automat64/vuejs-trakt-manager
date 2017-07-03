@@ -23,7 +23,7 @@
                 </div>
             <div class="column">
                 <div class="box">
-                    <trakt-user></trakt-user>
+                    <trakt-user v-bind:access_token="access_token"></trakt-user>
                 </div>
                 <div class="field has-addons">
                     <p class="control is-expanded has-icons-left has-icons-right">
@@ -65,6 +65,7 @@
         props: ['traktUrl'],
         data: function () {
             return {
+                access_token: 0,
                 greeting: 'Welcome to your Vue.js app!',
                 popularList: [
                 ],
@@ -112,19 +113,18 @@
         components: {
             TraktShow, TraktUser
         },
-        created: function () {
+        mounted: function () {
             let that = this;
             console.log("main template loaded");  
-            let access_token = localStorage.getItem('access_token');
             let refresh_token = localStorage.getItem('refresh_token');
             if (!refresh_token) {
                 that.$root.router.push("/authorize");
             }
             else {
                 services.axios_trakt({
-                  method: 'post',
-                  url: 'oauth/token',
-                  data: {
+                    method: 'post',
+                    url: 'oauth/token',
+                    data: {
                         refresh_token: refresh_token,
                         client_id: settings.client_id,
                         client_secret: settings.client_secret,
@@ -133,14 +133,13 @@
 
                   }
                 }).then(function (response) {
-                  console.log(response['data']);
-                  localStorage.setItem('access_token', response['data']['access_token']);
-                  localStorage.setItem('refresh_token', response['data']['refresh_token']);
-                  console.log(services.axios_trakt.defaults);
-                  services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
+                    localStorage.setItem('access_token', response['data']['access_token']);
+                    localStorage.setItem('refresh_token', response['data']['refresh_token']);
+                    services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
+                    that.access_token=response['data']['access_token'];
                 })
                 .catch(function (error) {
-                  that.$root.router.push("/authorize");
+                    that.$root.router.push("/authorize");
                 }); 
             }
             let q = this.$route.params.code;

@@ -32,47 +32,46 @@
 
     export default {
         name: 'TraktUser',
-        //props: ['movie'],
+        props: ['access_token'],
         data: function () {
             return {
               photo:'http://bulma.io/images/placeholders/128x128.png',
-              name:'#',
-              username:'#',
+              name:'loading...',
+              username:'loading...',
             };
         },
-        created: function () {
-            let that = this;
-            let access_token = localStorage.getItem('access_token');
+        mounted: function () {
 
-            services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ access_token;
-
-            services.axios_trakt({
-                method: 'get',
-                url: 'users/me?extended=full',
-                data: {
-                    access_token: access_token,
-                }
-            })
-            .then(function (response) {
-                that.name=response.data.name;
-                that.username=response.data.username;
-                that.photo=response.data.images.avatar.full;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        },
+        watch : {
+            access_token : function (value) {
+                let that = this;
+                services.axios_trakt({
+                    method: 'get',
+                    url: 'users/me?extended=full',
+                    data: {
+                        access_token: this.access_token,
+                    }
+                })
+                .then(function (response) {
+                    that.name=response.data.name;
+                    that.username=response.data.username;
+                    that.photo=response.data.images.avatar.full;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
         methods: {
             deauthorizeTrakt: function () {
-                let access_token = localStorage.getItem('access_token');
                 let that = this;
-                
                 services.axios_trakt({
                     method: 'post',
                     url: 'oauth/revoke',
 
                     data: {
-                        token: access_token,
+                        token: this.access_token,
                     }
                 })
                 .then(function (response) {
@@ -81,6 +80,9 @@
                     that.$root.router.push("/authorize");
                 })
                 .catch(function (error) {
+                    localStorage.removeItem("access_token");  
+                    localStorage.removeItem("refresh_token");   
+                    that.$root.router.push("/authorize");
                     console.log(error);
                 });
             },

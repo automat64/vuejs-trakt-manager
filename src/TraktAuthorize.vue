@@ -1,6 +1,7 @@
 <template>
     <div id="trakt-authorize">
-        <div class="modal is-active">
+        <div v-if="code" class="modal is-active"><div class="modal-background"></div></div>
+        <div v-else class="modal is-active">
             <div class="modal-background"></div>
             <div class="modal-content">
                 <article class="message">
@@ -30,11 +31,13 @@
         data: function() {
             return {
                 traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+settings.client_id+"&redirect_uri="+settings.redirect_uri,
+                code: 0
             };
         },
         created: function () {
             let that=this;
             let code = this.$route.query.code;
+            this.code=code;
             if (code) {
                 services.axios_trakt({
                     method: 'post',
@@ -55,7 +58,7 @@
                 .catch(function (error) {
                     console.log(that);
                     that.$root.router.push("/authorize");
-                }); 
+                });
             }
         },
     }
