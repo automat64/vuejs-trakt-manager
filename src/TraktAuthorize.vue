@@ -1,6 +1,22 @@
 <template>
     <div id="trakt-authorize">
-        <a :href="traktUrl">Authorize??</a>
+        <div class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <article class="message">
+                    <div class="message-header">
+                        <p><span class="icon"><i class="fa fa-user-o"></i></span>Hello You</p>
+                    </div>
+                        <div class="message-body">
+                            <p>Before you continue you need to authorize your Trakt account.</p>
+                            <div class="block has-text-centered">
+                                <a class="button is-primary" :href="traktUrl">Well ok then...</a>
+                            </div>
+                        </div>
+                </article>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -46,4 +62,9 @@
 </script>
 
 <style lang="scss">
+#trakt-authorize {
+    a {
+        text-decoration: none;
+    }
+}
 </style>

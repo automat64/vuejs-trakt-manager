@@ -19,6 +19,7 @@ const router = new VueRouter({
 });
 
 Vue.use(VueRouter);
+
 new Vue({
     el: '#app',
     router: router,

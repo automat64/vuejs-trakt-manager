@@ -22,6 +22,9 @@
                     </div>
                 </div>
             <div class="column">
+                <div class="box">
+                    <trakt-user></trakt-user>
+                </div>
                 <div class="field has-addons">
                     <p class="control is-expanded has-icons-left has-icons-right">
                         <input class="input" v-model="searchString" v-on:keyup.enter="searchTrakt" placeholder="Enter text">
@@ -35,7 +38,7 @@
                     <p class="control">
                         <a class="button is-info" v-on:click="searchTrakt">Search</a>
                     </p>
-            </div>
+                </div>
                 <div class="box">
                     <div class="title has-text-centered">RESULTS</div>
                     <trakt-show
@@ -54,6 +57,7 @@
     import services from "./services.js";
     import settings from "./settings.js";
     import TraktShow from './TraktShow.vue';
+    import TraktUser from './TraktUser.vue';
 
     export default {
         name: 'TraktApp',
@@ -86,7 +90,8 @@
                         data: {
 
                         }
-                    }).then(function (response) {
+                    })
+                    .then(function (response) {
                         let list = [];
 
                         for (let item of response.data) {
@@ -105,7 +110,7 @@
             }
         }, 
         components: {
-            TraktShow,
+            TraktShow, TraktUser
         },
         created: function () {
             let that = this;
@@ -131,7 +136,8 @@
                   console.log(response['data']);
                   localStorage.setItem('access_token', response['data']['access_token']);
                   localStorage.setItem('refresh_token', response['data']['refresh_token']);
-                  
+                  console.log(services.axios_trakt.defaults);
+                  services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
                 })
                 .catch(function (error) {
                   that.$root.router.push("/authorize");
