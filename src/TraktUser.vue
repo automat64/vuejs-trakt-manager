@@ -81,9 +81,6 @@
                     that.$root.router.push("/authorize");
                 })
                 .catch(function (error) {
-                    localStorage.removeItem("access_token");  
-                    localStorage.removeItem("refresh_token");   
-                    that.$root.router.push("/authorize");
                     console.log(error);
                 });
             },
