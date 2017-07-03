@@ -108,11 +108,12 @@
             TraktShow,
         },
         created: function () {
+            let that = this;
             console.log("main template loaded");  
             let access_token = localStorage.getItem('access_token');
             let refresh_token = localStorage.getItem('refresh_token');
             if (!refresh_token) {
-                router.push("/authorize");
+                that.$root.router.push("/authorize");
             }
             else {
                 services.axios_trakt({
@@ -133,12 +134,11 @@
                   
                 })
                 .catch(function (error) {
-                  router.push("/authorize");
+                  that.$root.router.push("/authorize");
                 }); 
             }
             let q = this.$route.params.code;
             console.log(q);  
-            var that = this;
 
             services.axios_trakt({
                 method: 'get',
