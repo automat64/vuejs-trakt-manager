@@ -4,9 +4,9 @@ import 'bulma/css/bulma.css'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import App from './App.vue';
-import TraktAuthorize from './TraktAuthorize.vue';
-import TraktApp from './TraktApp.vue';
+import App from './components/App.vue';
+import TraktAuthorize from './components/TraktAuthorize.vue';
+import TraktApp from './components/TraktApp.vue';
 
 const router = new VueRouter({
     mode: 'history',

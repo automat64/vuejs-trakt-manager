@@ -54,8 +54,8 @@
 
 <script>
 
-    import services from "./services.js";
-    import settings from "./settings.js";
+    import services from "../services.js";
+    import settings from "../settings.js";
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
 
