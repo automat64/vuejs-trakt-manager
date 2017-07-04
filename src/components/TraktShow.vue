@@ -1,6 +1,12 @@
 <template>
     <div id="trakt-show">
-        <div class="columns">
+        <div class="columns show-container">
+            <list-menu ref="menu" v-bind:movie="movie"></list-menu>
+            <a v-on:click="listMenu" class="button">
+                <span class="icon is-small">
+                  <i class="fa fa-bars"></i>
+                </span>
+            </a>
             <div class="column ">
                 <img v-bind:src="photo">
             </div>
@@ -16,6 +22,7 @@
 
     import services from "../services.js";
     import settings from "../settings.js";
+    import ListMenu from './ListMenu.vue';
 
     export default {
         name: 'TraktShow',
@@ -40,9 +47,32 @@
             .catch(function (error) {
                 console.log(error);
             });
-        }
+        },
+        methods: {
+            listMenu: function (e) {
+                //console.log(this.$$);
+                this.$refs.menu.clickMenu(e);
+                /*var viewportOffset = that.getBoundingClientRect();
+                // these are relative to the viewport, i.e. the window
+                var top = viewportOffset.top;
+                var left = viewportOffset.left;*/
+            },
+        },
+        components: {
+            ListMenu
+        },
     }
 </script>
 
 <style lang="scss">
+    .show-container {
+        position: relative;
+        .button {
+            position: absolute;
+            right:0;
+            top:0;
+            border: none;
+            background: transparent;
+        }
+    }
 </style>

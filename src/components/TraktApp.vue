@@ -1,7 +1,7 @@
 <template>
     <div id="trakt-app">
         <div class="columns">
-            <div class="column">
+<!--             <div class="column">
                 <div class="box">
                     <div class="title has-text-centered">POPULAR</div>
                     <trakt-show
@@ -10,8 +10,8 @@
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
-            </div>
-            <div class="column">
+            </div> -->
+            <div class="column list-column">
                 <div class="box">
                     <div class="title has-text-centered">TRENDING</div>
                     <trakt-show
@@ -19,9 +19,39 @@
                         v-bind:movie="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
-                    </div>
                 </div>
-            <div class="column">
+            </div>
+            <div class="column list-column">
+                <div class="box">
+                    <div class="title has-text-centered">COLLECTION</div>
+                    <trakt-show
+                        v-for="item in collectionList"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                </div>
+            </div>
+            <div class="column list-column">
+                <div class="box">
+                    <div class="title has-text-centered">WATCHLIST</div>
+                    <trakt-show
+                        v-for="item in watchList"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                </div>
+            </div>
+            <div class="column list-column">
+                <div class="box">
+                    <div class="title has-text-centered">PROGRESSION</div>
+                    <trakt-show
+                        v-for="item in progressList"
+                        v-bind:movie="item"
+                        v-bind:key="item.ids.imdb">
+                    </trakt-show>
+                </div>
+            </div>
+            <div class="column list-column">
                 <div class="box">
                     <trakt-user v-bind:access_token="access_token"></trakt-user>
                 </div>
@@ -70,6 +100,12 @@
                 popularList: [
                 ],
                 trendingList: [
+                ],
+                collectionList: [
+                ],
+                watchList: [
+                ],
+                progressList: [
                 ],
                 searchResults: [],
                 showInfo: [],
@@ -175,9 +211,50 @@
             .catch(function (error) {
                 console.log(error);
             });
+
+            services.axios_trakt({
+                method: 'get',
+                url: 'users/me/collection/shows?extended=full',
+                data: {
+                    token: this.access_token,
+                }
+            }).then(function (response) {
+                let list = [];
+
+                for (let item of response.data) {
+                    list.push(item.show);
+                }
+                that.collectionList=list;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            services.axios_trakt({
+                method: 'get',
+                url: 'users/me/watchlist/shows?extended=full',
+                data: {
+                    token: this.access_token,
+                }
+            }).then(function (response) {
+                let list = [];
+
+                for (let item of response.data) {
+                    list.push(item.show);
+                }
+                that.watchList=list;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    
         },
     }
 </script>
 
 <style lang="scss">
+    .list-column {
+        max-height: 100vh;
+        overflow-y: auto;
+    }
 </style>
