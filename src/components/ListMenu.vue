@@ -1,7 +1,9 @@
 <template>
     <ul id="right-click-menu" tabindex="-1"  v-if="viewMenu" v-on:blur="closeMenu"  v-bind:style="{top:top, left:left}">
-        <li>First list item</li>
-        <li>{{movie.ids.imdb}}</li>
+        <li><a>Add to Watchlist</a></li>
+        <li><a>Add to Collection</a></li>
+        <li><a>Remove from Watchlist</a></li>
+        <li><a>Remove from Collection</a></li>
     </ul>
 </div>
 </template>

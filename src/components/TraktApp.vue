@@ -41,7 +41,7 @@
                     </trakt-show>
                 </div>
             </div>
-            <div class="column list-column">
+            <!-- <div class="column list-column">
                 <div class="box">
                     <div class="title has-text-centered">PROGRESSION</div>
                     <trakt-show
@@ -50,7 +50,7 @@
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
-            </div>
+            </div> -->
             <div class="column list-column">
                 <div class="box">
                     <trakt-user v-bind:access_token="access_token"></trakt-user>
