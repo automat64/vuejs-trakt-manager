@@ -1,8 +1,8 @@
 <template>
     <ul id="right-click-menu" tabindex="-1"  v-if="viewMenu" v-on:blur="closeMenu"  v-bind:style="{top:top, left:left}">
         <li><a>Add to Watchlist</a></li>
-        <li><a>Add to Collection</a></li>
         <li><a>Remove from Watchlist</a></li>
+        <li><a>Add to Collection</a></li>
         <li><a>Remove from Collection</a></li>
     </ul>
 </div>
@@ -15,7 +15,7 @@
     import Vue from "vue";
     export default {
         name: 'ListMenu',
-        props: ['movie'],
+        props: ['show'],
         data: function () {
             return {
                 viewMenu: false,
@@ -25,6 +25,20 @@
         },
 
         methods: {
+            setMenu: function(top, left) {
+              
+                /*largestHeight = window.innerHeight - this.$$.right.offsetHeight - 25;
+                largestWidth = window.innerWidth - this.$$.right.offsetWidth - 25;
+
+                if (top > largestHeight) top = largestHeight;
+
+                if (left > largestWidth) left = largestWidth;*/
+
+                this.top = top  + 'px';
+                this.left = left + 30 + 'px';
+                if (left>(window.innerWidth-150)) this.left = left - 260 + 'px';
+            },
+
             closeMenu: function() {
                 this.viewMenu = false;
             },
@@ -33,7 +47,10 @@
             },
             openMenu: function(e) {
                 console.log(e.target.getBoundingClientRect());
+                let bounds = e.target.getBoundingClientRect()
                 this.viewMenu = true;
+
+                    this.setMenu(bounds.top, bounds.left,)
                 e.preventDefault();
             }
         }
@@ -49,7 +66,7 @@
         list-style: none;
         margin: 0;
         padding: 0;
-        position: absolute;
+        position: fixed;
         width: 250px;
         z-index: 999999;
     }

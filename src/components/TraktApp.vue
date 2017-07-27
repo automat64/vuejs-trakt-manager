@@ -6,7 +6,7 @@
                     <div class="title has-text-centered">POPULAR</div>
                     <trakt-show
                         v-for="item in popularList"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -16,7 +16,7 @@
                     <div class="title has-text-centered">TRENDING</div>
                     <trakt-show
                         v-for="item in trendingList"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="title has-text-centered">COLLECTION</div>
                     <trakt-show
                         v-for="item in collectionList"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="title has-text-centered">WATCHLIST</div>
                     <trakt-show
                         v-for="item in watchList"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="title has-text-centered">PROGRESSION</div>
                     <trakt-show
                         v-for="item in progressList"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="title has-text-centered">RESULTS</div>
                     <trakt-show
                         v-for="item in searchResults"
-                        v-bind:movie="item"
+                        v-bind:show="item"
                         v-bind:key="item.ids.imdb">
                     </trakt-show>
                 </div>
@@ -116,6 +116,8 @@
         methods: {
             searchTrakt: function () {
                 let that = this;
+                debugger;
+
                 if (this.searchString.length<3) {
                     this.searchResults = [];
                 }
@@ -123,7 +125,7 @@
                     this.searching=true;
                     services.axios_trakt({
                         method: 'get',
-                        url: 'search/show?query='+this.searchString,
+                        url: 'search/show?query='+this.searchString+"",
                         data: {
 
                         }
