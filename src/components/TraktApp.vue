@@ -1,5 +1,6 @@
 <template>
     <div id="trakt-app">
+        <notifications group="notifications" />
         <div class="columns">
 <!--             <div class="column">
                 <div class="box">
@@ -155,6 +156,7 @@
             TraktShow, TraktUser
         },
         mounted: function () {
+            
             let that = this;
             console.log("main template loaded");  
             let refresh_token = localStorage.getItem('refresh_token');
@@ -178,6 +180,12 @@
                     localStorage.setItem('refresh_token', response['data']['refresh_token']);
                     services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
                     that.access_token=response['data']['access_token'];
+                    that.$notify({
+                        group: 'notifications',
+                        type: 'success',
+                        title: 'Trakt authorization successful',
+                        
+                    });
                 })
                 .catch(function (error) {
                     that.$root.router.push("/authorize");

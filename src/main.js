@@ -4,6 +4,7 @@ import 'bulma/css/bulma.css'
 import Vue from 'vue';
 import Vuex from 'vuex'
 import VueRouter from 'vue-router';
+import Notifications from 'vue-notification'
 
 import App from './components/App.vue';
 import TraktAuthorize from './components/TraktAuthorize.vue';
@@ -11,6 +12,7 @@ import TraktApp from './components/TraktApp.vue';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(Notifications)
 
 const router = new VueRouter({
     mode: 'history',
@@ -31,7 +33,7 @@ const store = new Vuex.Store({
       }
     }
   })
-  
+
 new Vue({
     el: '#app',
     router: router,
