@@ -25,11 +25,30 @@ let axios_tvdb = axios.create({
     // headers: {
     //   'api_key': "33384ca5a5f607463d331459320cfc81",
     // }
-  });
+});
 
 
-axiosRetry(axios_tvdb, { retries: 3 });
-axiosRetry(axios_fanart, { retries: 3 });
+axiosRetry(axios_trakt, { 
+    retries: 5,
+    retryCondition: (response) => {  // custom
+        return true;//response.config.method === 'POST';
+        debugger;
+        let result = (axiosRetry.isRetryableError(response) || response.config.method === 'GET')
+        debugger;
+        return result
+    },
+});
+
+axiosRetry(axios_fanart, { 
+    retries: 3,
+    retryCondition: (response) => {  // custom
+        return true;//response.config.method === 'POST';
+        debugger;
+        let result = (axiosRetry.isRetryableError(response) || response.config.method === 'GET')
+        debugger;
+        return result
+    },
+});
 
 export default {
     axios_trakt: axios_trakt,

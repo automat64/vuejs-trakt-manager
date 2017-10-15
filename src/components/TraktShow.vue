@@ -42,6 +42,10 @@
             services.axios_fanart({
                 method: 'get',
                 url: 'tv/'+this.show.ids.tvdb+'?api_key=3e53bdae664d5e570691c6c95becc11e&client_key=a90da1673943ed58d466f207e12668cd',
+                retryCondition: (response) => {  // custom
+                    debugger;
+                    return axiosRetry.isNetworkError(response) || response.config.method === 'GET'
+                },
             }).then(function (response) {
                 that.photo=response.data.hdtvlogo[0].url;
                 console.log(response.data.hdtvlogo[0].url)
