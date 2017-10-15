@@ -2,11 +2,15 @@ import "babel-polyfill";
 import 'bulma/css/bulma.css'
 
 import Vue from 'vue';
+import Vuex from 'vuex'
 import VueRouter from 'vue-router';
 
 import App from './components/App.vue';
 import TraktAuthorize from './components/TraktAuthorize.vue';
 import TraktApp from './components/TraktApp.vue';
+
+Vue.use(VueRouter);
+Vue.use(Vuex);
 
 const router = new VueRouter({
     mode: 'history',
@@ -17,12 +21,21 @@ const router = new VueRouter({
         {name:'main_app' ,path: '/', component: TraktApp, props: true},
     ]
 });
-
-Vue.use(VueRouter);
-
+const store = new Vuex.Store({
+    state: {
+      count: 2
+    },
+    mutations: {
+      increment (state) {
+        state.count++;
+      }
+    }
+  })
+  
 new Vue({
     el: '#app',
     router: router,
+    store,
     data : {
         router: router,
     },

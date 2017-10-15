@@ -23,7 +23,25 @@
                 left: '0px'
             }
         },
-
+        created: function () {
+            let that=this;
+            this.$store.watch(
+                function (state) {
+                    return state.count;
+                    console.log('return state.my_state');
+                },
+                function () {
+                    //do something on data change
+                    //debugger;
+                    that.viewMenu = false; 
+                    console.log(that.top);
+                    
+                },
+                {
+                    deep: true //add this if u need to watch object properties change etc.
+                }
+            );
+        },
         methods: {
             setMenu: function(top, left) {
               
@@ -40,19 +58,27 @@
             },
 
             closeMenu: function() {
-                this.viewMenu = false;
+                this.viewMenu = false;  
+                //this.$store.commit('increment');
             },
             clickMenu: function(e) {
-                (this.viewMenu ? this.closeMenu() : this.openMenu(e)); 
+                
+               // debugger;
+                (this.viewMenu ? this.closeMenu() : this.openMenu(e));        
             },
             openMenu: function(e) {
-                console.log(e.target.getBoundingClientRect());
-                let bounds = e.target.getBoundingClientRect()
-                this.viewMenu = true;
+                this.$store.commit('increment');
+                let that=this;
+                setTimeout(function(){ 
+                   console.log(e.target.getBoundingClientRect());
+                    let bounds = e.target.getBoundingClientRect()
+                    that.viewMenu = true;
 
-                    this.setMenu(bounds.top, bounds.left,)
+                    that.setMenu(bounds.top, bounds.left,)
+                }, 20);
+                
                 e.preventDefault();
-            }
+            },
         }
     }
 </script>

@@ -14,7 +14,7 @@
             <div class="column list-column">
                 <div class="box">
                     <div class="title has-text-centered">TRENDING</div>
-                    <trakt-show
+                    <trakt-show  v-on:event_child="eventChild" 
                         v-for="item in trendingList"
                         v-bind:show="item"
                         v-bind:key="item.ids.imdb">
@@ -116,7 +116,7 @@
         methods: {
             searchTrakt: function () {
                 let that = this;
-                debugger;
+
 
                 if (this.searchString.length<3) {
                     this.searchResults = [];
@@ -146,7 +146,10 @@
                         that.searching=false;
                     });
                 }
-            }
+            },
+            eventChild: function(id) {
+                console.log('Event from new child component emitted', id)
+            },
         }, 
         components: {
             TraktShow, TraktUser
