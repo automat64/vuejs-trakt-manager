@@ -1,4 +1,4 @@
-import "babel-polyfill";
+//import "babel-polyfill";
 import 'bulma/css/bulma.css'
 
 import Vue from 'vue';
