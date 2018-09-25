@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-
+//axiosRetry(axios, { retries: 3 });
 
 let trakt_access_token = localStorage.getItem('access_token');
 let axios_trakt = axios.create({
@@ -30,9 +30,12 @@ let axios_tvdb = axios.create({
 
 axiosRetry(axios_trakt, { 
     retries: 5,
+    retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
-        return true;//response.config.method === 'POST';
-        debugger;
+        console.log("retry TRAKT");
+        return true;
+        //return true;//response.config.method === 'POST';
+        //debugger;
         let result = (axiosRetry.isRetryableError(response) || response.config.method === 'GET')
         debugger;
         return result
@@ -41,9 +44,12 @@ axiosRetry(axios_trakt, {
 
 axiosRetry(axios_fanart, { 
     retries: 3,
+    retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
-        return true;//response.config.method === 'POST';
-        debugger;
+        console.log("retry FANART");
+        return true;
+        //return true;//response.config.method === 'POST';
+       // debugger;
         let result = (axiosRetry.isRetryableError(response) || response.config.method === 'GET')
         debugger;
         return result
