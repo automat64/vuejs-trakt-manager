@@ -48,7 +48,7 @@
                 },
             }).then(function (response) {
                 that.photo=response.data.hdtvlogo[0].url;
-                console.log(response.data.hdtvlogo[0].url)
+                //console.log(response.data.hdtvlogo[0].url)
             })
             .catch(function (error) {
                 console.log("tvbanner art not found for "+that.show.title);

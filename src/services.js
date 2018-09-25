@@ -29,7 +29,7 @@ let axios_tvdb = axios.create({
 
 
 axiosRetry(axios_trakt, { 
-    retries: 5,
+    retries: 1,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
         console.log("retry TRAKT");
@@ -43,7 +43,7 @@ axiosRetry(axios_trakt, {
 });
 
 axiosRetry(axios_fanart, { 
-    retries: 3,
+    retries: 1,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
         console.log("retry FANART");

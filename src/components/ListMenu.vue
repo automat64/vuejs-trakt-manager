@@ -5,7 +5,6 @@
         <li><a v-on:click="addToCollection">Add to Collection</a></li>
         <li><a v-on:click="removeFromCollection">Remove from Collection</a></li>
     </ul>
-</div>
 </template>
 
 <script>
@@ -28,13 +27,13 @@
             this.$store.watch(
                 function (state) {
                     return state.count;
-                    console.log('return state.my_state');
+                    console.log("store state change");
                 },
                 function () {
                     //do something on data change
                     //debugger;
                     that.viewMenu = false; 
-                    console.log(that.top);
+                    console.log("store data change");
                     
                 },
                 {
@@ -62,7 +61,7 @@
                 this.$store.commit('increment');
                 let that=this;
                 setTimeout(function(){ 
-                   console.log(e.target.getBoundingClientRect());
+                    //console.log(e.target.getBoundingClientRect());
                     let bounds = e.target.getBoundingClientRect()
                     that.viewMenu = true;
 

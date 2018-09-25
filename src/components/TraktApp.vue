@@ -86,7 +86,6 @@
 <script>
 
     import services from "../services.js";
-    import settings from "../settings.js";
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
 
@@ -115,6 +114,9 @@
             };
         },
         methods: {
+            initApp: function () {
+                this.$root.router.push("/");
+            },
             searchTrakt: function () {
                 let that = this;
 
@@ -159,41 +161,7 @@
             
             let that = this;
             console.log("main template loaded");  
-            let refresh_token = localStorage.getItem('refresh_token');
-            if (!refresh_token) {
-                that.$root.router.push("/authorize");
-            }
-            else {
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'oauth/token',
-                    data: {
-                        refresh_token: refresh_token,
-                        client_id: settings.client_id,
-                        client_secret: settings.client_secret,
-                        redirect_uri: settings.redirect_uri,
-                        grant_type: "refresh_token"
-
-                  }
-                }).then(function (response) {
-                    localStorage.setItem('access_token', response['data']['access_token']);
-                    localStorage.setItem('refresh_token', response['data']['refresh_token']);
-                    services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
-                    that.access_token=response['data']['access_token'];
-                    that.$notify({
-                        group: 'notifications',
-                        type: 'success',
-                        title: 'Trakt authorization successful',
-                        
-                    });
-                })
-                .catch(function (error) {
-                    that.$root.router.push("/authorize");
-                }); 
-            }
-            let q = this.$route.params.code;
-            console.log(q);  
-
+            this.access_token = localStorage.getItem('refresh_token'),
             services.axios_trakt({
                 method: 'get',
                 url: 'shows/popular?extended=full',
@@ -205,6 +173,7 @@
             })
             .catch(function (error) {
                 console.log(error);
+                that.initApp();
             });
 
             services.axios_trakt({
@@ -223,6 +192,7 @@
             })
             .catch(function (error) {
                 console.log(error);
+                that.initApp();
             });
 
             services.axios_trakt({
@@ -241,6 +211,7 @@
             })
             .catch(function (error) {
                 console.log(error);
+                that.initApp();
             });
 
             services.axios_trakt({
@@ -259,6 +230,7 @@
             })
             .catch(function (error) {
                 console.log(error);
+                that.initApp();
             });
     
         },
