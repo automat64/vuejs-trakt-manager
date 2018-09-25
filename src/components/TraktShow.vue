@@ -51,6 +51,7 @@
                 //console.log(response.data.hdtvlogo[0].url)
             })
             .catch(function (error) {
+                that.photo="/no-banner.png";
                 console.log("tvbanner art not found for "+that.show.title);
             });
         },
@@ -76,6 +77,9 @@
             top:0;
             border: none;
             background: transparent;
+        }
+        .imdb-link a:first-of-type {
+            margin-right: 10px;
         }
     }
 </style>
