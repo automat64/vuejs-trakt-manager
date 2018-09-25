@@ -11,7 +11,7 @@
 
     import services from "../services.js";
     import settings from "../settings.js";
-    import Vue from "vue";
+
     export default {
         name: 'ListMenu',
         props: ['show'],

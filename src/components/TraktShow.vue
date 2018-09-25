@@ -2,13 +2,14 @@
     <div id="trakt-show">
         <div class="columns show-container">
             <list-menu ref="menu" v-bind:show="show"></list-menu>
+            <show-details ref="details" v-bind:show="show"></show-details>
             <a v-on:click="listMenu" class="button">
                 <span class="icon is-small">
                   <i class="fa fa-bars"></i>
                 </span>
             </a>
             <div class="column ">
-                <img v-bind:src="photo">
+                <a v-on:click="showModal"><img v-bind:src="photo"></a>
             </div>
             <div class="column ">
             <div class="">{{ show.title }}</div>
@@ -23,6 +24,7 @@
     import services from "../services.js";
     import settings from "../settings.js";
     import ListMenu from './ListMenu.vue';
+    import ShowDetails from './ShowDetails.vue';
 
     export default {
         name: 'TraktShow',
@@ -48,10 +50,15 @@
                 },
             }).then(function (response) {
                 that.photo=response.data.hdtvlogo[0].url;
+                
+                that.show.photo = that.photo;
+                that.show.poster = response.data.tvposter[0].url;
+                that.show.background = response.data.showbackground[0].url;
                 //console.log(response.data.hdtvlogo[0].url)
             })
             .catch(function (error) {
                 that.photo="/no-banner.png";
+                that.show.photo = that.photo;
                 console.log("tvbanner art not found for "+that.show.title);
             });
         },
@@ -61,9 +68,14 @@
                 this.$refs.menu.clickMenu(e);
                 
             },
+            showModal: function (e) {
+                //let that = this;
+                this.$refs.details.showModal(e);
+                
+            },
         },
         components: {
-            ListMenu
+            ListMenu, ShowDetails
         },
     }
 </script>
