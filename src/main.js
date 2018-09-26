@@ -11,6 +11,9 @@ import TraktAuthorize from './components/TraktAuthorize.vue';
 import TraktApp from './components/TraktApp.vue';
 import AppInit from './components/AppInit.vue';
 
+import VueAnalytics from 'vue-analytics'
+
+
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(Notifications)
@@ -25,6 +28,12 @@ const router = new VueRouter({
         {name:'init' ,path: '/', component: AppInit, props: true},
     ]
 });
+
+Vue.use(VueAnalytics, {
+    id: 'UA-113864962-1',
+    router
+})
+
 const store = new Vuex.Store({
     state: {
       count: 2

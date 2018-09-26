@@ -88,7 +88,7 @@
     import services from "../services.js";
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
-
+    import { page } from 'vue-analytics';
     export default {
         name: 'TraktApp',
         template: '#trakt-app-template',
@@ -114,6 +114,9 @@
             };
         },
         methods: {
+            track () {
+                this.$ga.page('/shows')
+            },
             initApp: function () {
                 this.$root.router.push("/");
             },
