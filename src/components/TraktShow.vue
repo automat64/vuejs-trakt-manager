@@ -12,7 +12,7 @@
                 <a v-on:click="showModal"><img v-bind:src="photo"></a>
             </div>
             <div class="column ">
-            <div class="">{{ show.title }}</div>
+            <div class=""><a v-on:click="showModal"><h5>{{ show.title }}</h5></a></div>
             <div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a  v:if="show.trailer" v-bind:href="show.trailer" target="_blank">Trailer</a></div>
             </div>
         </div>
@@ -83,6 +83,9 @@
 <style lang="scss">
     .show-container {
         position: relative;
+        h5 {
+            color:#222;
+        }
         .button {
             position: absolute;
             right:0;

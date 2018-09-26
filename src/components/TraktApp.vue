@@ -242,4 +242,7 @@
         max-height: 100vh;
         overflow-y: auto;
     }
+    .vue-notification {
+        font-size: 18px;
+    }
 </style>

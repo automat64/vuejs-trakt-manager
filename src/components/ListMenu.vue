@@ -106,6 +106,7 @@
                         text: 'Could not complete action'
                     });
                 });
+                that.viewMenu = false; 
             },
             removeFromWatchlist: function () {
                 console.log(this.show)
@@ -152,6 +153,7 @@
                         text: 'Could not complete action'
                     });
                 });
+                that.viewMenu = false; 
             },
             addToCollection: function () {
                 let that=this;
@@ -191,6 +193,7 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+                that.viewMenu = false; 
             },
             removeFromCollection: function () {
                 let that=this;
@@ -230,6 +233,7 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+                that.viewMenu = false; 
             },
         }
     }
