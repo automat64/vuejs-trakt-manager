@@ -128,7 +128,7 @@
                     this.searching=true;
                     services.axios_trakt({
                         method: 'get',
-                        url: 'search/show?query='+this.searchString+"",
+                        url: 'search/show?extended=full&query='+this.searchString+"",
                         data: {
 
                         }
