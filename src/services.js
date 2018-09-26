@@ -5,6 +5,7 @@ import axiosRetry from 'axios-retry';
 let trakt_access_token = localStorage.getItem('access_token');
 let axios_trakt = axios.create({
     baseURL: 'https://api.trakt.tv',
+    crossdomain: true,
     timeout: 15000,
     headers: {
         'Content-type': 'application/json',

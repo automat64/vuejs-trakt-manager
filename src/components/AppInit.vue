@@ -33,7 +33,7 @@
             
             let that = this;
             console.log("app init template loaded");  
-            //let refresh_token = localStorage.getItem('refresh_token');
+            let refresh_token = localStorage.getItem('refresh_token');
             this.app_status = "Checking refresh token";
             if (!this.refresh_token) {
                 this.app_status = "Refresh token not found, redirecting.";
