@@ -36,9 +36,6 @@
             };
         },
         created: function () {
-            
-        },
-        mounted: function () {
             let that = this;
             this.imdb_link="http://www.imdb.com/title/"+this.show.ids.imdb+"/"; 
             services.axios_fanart({
@@ -54,13 +51,16 @@
                 that.show.photo = that.photo;
                 that.show.poster = response.data.tvposter[0].url;
                 that.show.background = response.data.showbackground[0].url;
-                //console.log(response.data.hdtvlogo[0].url)
+                //console.log("tvbanner art found for "+that.show.title);
             })
             .catch(function (error) {
                 that.photo="/no-banner.png";
                 that.show.photo = that.photo;
-                console.log("tvbanner art not found for "+that.show.title);
+                //console.log("tvbanner art not found for "+that.show.title);
             });
+        },
+        mounted: function () {
+            
         },
         methods: {
             listMenu: function (e) {

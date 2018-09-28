@@ -2,56 +2,97 @@
     <div id="trakt-app">
         <notifications group="notifications" />
         <div class="columns">
-<!--             <div class="column">
-                <div class="box">
-                    <div class="title has-text-centered">POPULAR</div>
-                    <trakt-show
-                        v-for="item in popularList"
-                        v-bind:show="item"
-                        v-bind:key="item.ids.imdb">
-                    </trakt-show>
-                </div>
-            </div> -->
             <div class="column list-column">
-                <div class="box">
-                    <div class="title has-text-centered">TRENDING</div>
-                    <trakt-show  v-on:event_child="eventChild" 
-                        v-for="item in trendingList"
-                        v-bind:show="item"
-                        v-bind:key="item.ids.imdb">
-                    </trakt-show>
+                <div class="tabs is-centered is-boxed">
+                    <ul>
+                        <li :class="{'is-active' : traktListsTab == 'trending' }">
+                            <a v-on:click="switchTraktListTab('trending')">
+                                <span>Trending</span>
+                            </a>
+                        </li>
+                        <li :class="{'is-active' : traktListsTab == 'popular' }">
+                            <a v-on:click="switchTraktListTab('popular')">
+                                <span>Popular</span>
+                            </a>
+                        </li>
+                        <li :class="{'is-active' : traktListsTab == 'recommended' }">
+                            <a v-on:click="switchTraktListTab('recommended')">
+                                <span>Recommended</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="trending" :class="{'hidden' : traktListsTab != 'trending' }">
+                    <div class="box">
+                        <div class="title has-text-centered">TRENDING</div>
+                        <trakt-show  v-on:event_child="eventChild" 
+                            v-for="item in trendingList"
+                            v-bind:show="item"
+                            v-bind:key="item.ids.imdb">
+                        </trakt-show>
+                    </div>
+                </div>
+                <div class="popular" :class="{'hidden' : traktListsTab != 'popular' }">
+                    <div class="box">
+                        <div class="title has-text-centered">POPULAR</div>
+                        <trakt-show  v-on:event_child="eventChild" 
+                            v-for="item in popularList"
+                            v-bind:show="item"
+                            v-bind:key="item.ids.imdb">
+                        </trakt-show>
+                    </div>
+                </div>
+                <div class="recommended" :class="{'hidden' : traktListsTab != 'recommended' }">
+                    <div class="box">
+                        <div class="title has-text-centered">RECOMMENDED</div>
+                        <trakt-show  v-on:event_child="eventChild" 
+                            v-for="item in recommendedList"
+                            v-bind:show="item" 
+                            v-bind:key="item.ids.imdb">
+                        </trakt-show>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="column list-column">
+                <div class="tabs is-centered is-boxed">
+                    <ul>
+                        <li :class="{'is-active' : userListsTab == 'collection' }">
+                            <a v-on:click="switchUserListTab('collection')">
+                                <span>Collection</span>
+                            </a>
+                        </li>
+                        <li :class="{'is-active' : userListsTab == 'watchlist' }">
+                            <a v-on:click="switchUserListTab('watchlist')">
+                                <span>Watchlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collection" :class="{'hidden' : userListsTab != 'collection' }">
+                    <div class="box">
+                        <div class="title has-text-centered">COLLECTION</div>
+                        <trakt-show
+                            v-for="item in collectionList"
+                            v-bind:show="item"
+                            v-bind:key="item.ids.imdb">
+                        </trakt-show>
+                    </div>
+                </div>
+                <div class="watchlist" :class="{'hidden' : userListsTab != 'watchlist' }">
+                    <div class="box">
+                        <div class="title has-text-centered">WATCHLIST</div>
+                        <trakt-show
+                            v-for="item in watchList"
+                            v-bind:show="item"
+                            v-bind:key="item.ids.imdb">
+                        </trakt-show>
+                    </div>
                 </div>
             </div>
             <div class="column list-column">
-                <div class="box">
-                    <div class="title has-text-centered">COLLECTION</div>
-                    <trakt-show
-                        v-for="item in collectionList"
-                        v-bind:show="item"
-                        v-bind:key="item.ids.imdb">
-                    </trakt-show>
-                </div>
+                
             </div>
-            <div class="column list-column">
-                <div class="box">
-                    <div class="title has-text-centered">WATCHLIST</div>
-                    <trakt-show
-                        v-for="item in watchList"
-                        v-bind:show="item"
-                        v-bind:key="item.ids.imdb">
-                    </trakt-show>
-                </div>
-            </div>
-            <!-- <div class="column list-column">
-                <div class="box">
-                    <div class="title has-text-centered">PROGRESSION</div>
-                    <trakt-show
-                        v-for="item in progressList"
-                        v-bind:show="item"
-                        v-bind:key="item.ids.imdb">
-                    </trakt-show>
-                </div>
-            </div> -->
             <div class="column list-column">
                 <div class="box">
                     <trakt-user v-bind:access_token="access_token"></trakt-user>
@@ -101,6 +142,8 @@
                 ],
                 trendingList: [
                 ],
+                recommendedList: [
+                ],
                 collectionList: [
                 ],
                 watchList: [
@@ -111,9 +154,23 @@
                 showInfo: [],
                 searchString: '',
                 searching: false,
+                traktListsTab: 'trending',
+                userListsTab: 'collection'
             };
         },
         methods: {
+            switchTraktListTab (tabname) {
+                if (this.traktListsTab!=tabname) {
+                    console.log("switching tab to "+tabname);
+                    this.traktListsTab = tabname;
+                }
+            },
+            switchUserListTab (tabname) {
+                if (this.userListsTab!=tabname) {
+                    console.log("switching tab to "+tabname);
+                    this.userListsTab = tabname;
+                }
+            },
             track () {
                 this.$ga.page('/shows')
             },
@@ -200,6 +257,25 @@
 
             services.axios_trakt({
                 method: 'get',
+                url: 'shows/popular?extended=full',
+                data: {
+
+                }
+            }).then(function (response) {
+                let list = [];
+
+                for (let item of response.data) {
+                    list.push(item.show);
+                }
+                that.popularList=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+                that.initApp();
+            });
+
+            services.axios_trakt({
+                method: 'get',
                 url: 'users/me/collection/shows?extended=full',
                 data: {
                     token: this.access_token,
@@ -235,6 +311,26 @@
                 console.log(error);
                 that.initApp();
             });
+
+            services.axios_trakt({
+                method: 'get',
+                url: 'recommendations/shows?extended=full',
+                data: {
+                    token: this.access_token,
+                }
+            }).then(function (response) {
+                let list = [];
+
+                // for (let item of response.data) {
+                //     list.push(item.show);
+                // }
+                //that.popularList=list;
+                that.recommendedList=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+                //that.initApp();
+            });
     
         },
     }
@@ -244,6 +340,9 @@
     .list-column {
         max-height: 100vh;
         overflow-y: auto;
+    }
+    .hidden {
+        display:none;
     }
     .vue-notification {
         font-size: 18px;
