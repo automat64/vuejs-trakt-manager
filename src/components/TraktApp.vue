@@ -91,7 +91,22 @@
                 </div>
             </div>
             <div class="column list-column">
-                
+                <div class="tile is-ancestor">
+                    <div class="tile is-12 is-vertical is-parent">
+                        <div class="tile is-child box">
+                            <p class="title">Upcoming shows</p>
+                            <trakt-calendar-show 
+                                v-for="item in calendarList"
+                                v-bind:show="item"
+                                v-bind:key="item.ids.imdb">
+                            </trakt-calendar-show>
+                        </div>
+                        <div class="tile is-child box">
+                        <p class="title">Progress</p>
+                        <p>soon</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="column list-column">
                 <div class="box">
@@ -129,6 +144,7 @@
     import services from "../services.js";
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
+    import TraktCalendarShow from './TraktCalendarShow.vue';
     import { page } from 'vue-analytics';
     export default {
         name: 'TraktApp',
@@ -149,6 +165,8 @@
                 watchList: [
                 ],
                 progressList: [
+                ],
+                calendarList: [
                 ],
                 searchResults: [],
                 showInfo: [],
@@ -215,7 +233,7 @@
             },
         }, 
         components: {
-            TraktShow, TraktUser
+            TraktShow, TraktUser, TraktCalendarShow
         },
         mounted: function () {
             
@@ -330,6 +348,28 @@
             .catch(function (error) {
                 console.log(error);
                 //that.initApp();
+            });
+
+            services.axios_trakt({
+                method: 'get',
+                url: 'calendars/my/shows/',
+                data: {
+                    token: this.access_token,
+                }
+            }).then(function (response) {
+                let list = [];
+
+                for (let item of response.data) {
+                    let episode = item['episode'];
+                    episode['aired']=item['first_aired'];
+                    episode['show']=item['show'];
+                    list.push(episode);
+                }
+                that.calendarList=list;
+            })
+            .catch(function (error) {
+                console.log(error);
+                that.initApp();
             });
     
         },
