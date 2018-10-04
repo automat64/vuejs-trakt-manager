@@ -1,5 +1,5 @@
 <template>
-    <ul id="right-click-menu" tabindex="-1"  v-if="viewMenu" v-on:blur="closeMenu"  v-bind:style="{top:top, left:left}">
+    <ul id="right-click-menu" tabindex="-1" v-click-outside="closeMenu" v-if="viewMenu" v-on:blur="closeMenu"  v-bind:style="{top:top, left:left}">
         <li><a v-on:click="addToWatchlist">Add to Watchlist</a></li>
         <li><a v-on:click="removeFromWatchlist">Remove from Watchlist</a></li>
         <li><a v-on:click="addToCollection">Add to Collection</a></li>
@@ -11,10 +11,15 @@
 
     import services from "../services.js";
     import settings from "../settings.js";
+    
+    import vClickOutside from 'v-click-outside';
 
     export default {
         name: 'ListMenu',
         props: ['show'],
+        directives: {
+        clickOutside: vClickOutside.directive
+        },
         data: function () {
             return {
                 viewMenu: false,
