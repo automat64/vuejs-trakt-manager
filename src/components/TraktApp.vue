@@ -91,21 +91,23 @@
                 </div>
             </div>
             <div class="column list-column">
-                <div class="tile is-ancestor">
-                    <div class="tile is-12 is-vertical is-parent">
+                <div class="tile is-ancestor ">
+ 
+                    <div class="tile is-parent is-vertical my-tiles">
                         <div class="tile is-child box">
-                            <p class="title">Upcoming shows</p>
+                            <p class="title has-text-centered">CALENDAR</p>
                             <trakt-calendar-show 
                                 v-for="item in calendarList"
                                 v-bind:show="item"
-                                v-bind:key="item.ids.imdb">
+                                v-bind:key="item.ids.trakt">
                             </trakt-calendar-show>
                         </div>
                         <div class="tile is-child box">
-                        <p class="title">Progress</p>
-                        <p>soon</p>
+                            <p class="title has-text-centered">PROGRESS</p>
+                            <p>soon</p>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="column list-column">
@@ -386,5 +388,11 @@
     }
     .vue-notification {
         font-size: 18px;
+    }
+    .my-tiles {
+        .is-child {
+            overflow-y: scroll;
+            min-height: 50vh;
+        }
     }
 </style>
