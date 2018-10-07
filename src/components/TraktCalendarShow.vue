@@ -8,7 +8,7 @@
                 {{this.aired_month}}
             </div>
         </div>
-        <div class="calendar-show column is-vcentered is-two-fifths has-text-centered">{{ this.show.show.title}} S{{(this.show.season < 10 ? '0' : '') + this.show.season}}E{{(this.show.number < 10 ? '0' : '') + this.show.number}}</div >
+        <div class="calendar-show column is-vcentered is-two-fifths has-text-centered">{{ this.show.show.title}} S{{this.season}}E{{this.show.number}}</div >
         <div class="calendar-title column is-vcentered is-two-fifths has-text-centered">{{ this.show.title}}</div >
     </div>
 </template>
@@ -24,14 +24,20 @@
             };
         },
         computed: {
-            aired_day: function () {
+            aired_day () {
                let date = new Date(this.show.aired);
-               return date.getUTCDay();
+               return date.toLocaleString("en-us", { day: "numeric" });
             },
             aired_month: function () {
                let date = new Date(this.show.aired);
                return date.toLocaleString("en-us", { month: "short" });
             },
+            season: function () {
+                return (this.show.season < 10 ? '0' : '') + this.show.season;
+            },
+            episode () {
+                return (this.show.season < 10 ? '0' : '') + this.show.number;
+            }
         },
         created: function () {
 
