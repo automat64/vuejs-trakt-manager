@@ -104,7 +104,11 @@
                         </div>
                         <div class="tile is-child box">
                             <p class="title has-text-centered">PROGRESS</p>
-                            <p>soon</p>
+                            <trakt-progress-show 
+                                v-for="item in progressList"
+                                v-bind:show="item"
+                                v-bind:key="item.next_episode.ids.trakt">
+                            </trakt-progress-show>
                         </div>
                     </div>
 
@@ -147,6 +151,7 @@
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
     import TraktCalendarShow from './TraktCalendarShow.vue';
+    import TraktProgressShow from './TraktProgressShow.vue';
     import { page } from 'vue-analytics';
     export default {
         name: 'TraktApp',
@@ -235,13 +240,60 @@
             },
         }, 
         components: {
-            TraktShow, TraktUser, TraktCalendarShow
+            TraktShow, TraktUser, TraktCalendarShow, TraktProgressShow
         },
         mounted: function () {
             
             let that = this;
             console.log("main template loaded");  
             this.access_token = localStorage.getItem('refresh_token'),
+
+
+            services.axios_trakt({
+                method: 'get',
+                url: '/sync/watched/shows',
+                data: {
+                    token: this.access_token,
+                }
+            }).then(function (response) {
+                let list = [];
+                var i = 0;
+                for (i=0;i<10;i++) {
+                    console.log(response.data[i].show.ids.trakt);
+
+                    let show = response.data[i].show;
+                    
+                    
+                    services.axios_trakt({
+                        method: 'get',
+                        url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=true&specials=true&count_specials=true',
+                        data: {
+                            token: that.access_token,
+                        }
+                    }).then(function (response) {
+                        if (response.data!="") {
+                            let next_episode=response.data.next_episode;
+                            if (next_episode) {
+                                let progress_item = {
+                                    show,
+                                    next_episode
+                                }
+                                that.progressList.push(progress_item);
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+
+            })
+            .catch(function (error) {
+                console.log(error);
+                that.initApp();
+            });
+
+
             services.axios_trakt({
                 method: 'get',
                 url: 'shows/popular?extended=full',
@@ -373,6 +425,8 @@
                 console.log(error);
                 that.initApp();
             });
+
+            
     
         },
     }

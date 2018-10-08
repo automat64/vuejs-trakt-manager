@@ -47,7 +47,7 @@ axiosRetry(axios_fanart, {
     retries: 1,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
-        console.log("retry FANART");
+        //console.log("retry FANART");
         return true;
         //return true;//response.config.method === 'POST';
        // debugger;
