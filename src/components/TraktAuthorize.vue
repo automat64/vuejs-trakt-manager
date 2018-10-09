@@ -30,7 +30,7 @@
         name: 'TraktAuthorize',
         data: function() {
             return {
-                traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+settings.client_id+"&redirect_uri="+settings.redirect_uri,
+                traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+process.env.VUE_APP_CLIENT_ID+"&redirect_uri="+settings.redirect_uri,
                 code: 0
             };
         },
@@ -44,8 +44,8 @@
                     url: 'oauth/token',
                     data: {
                         code: code,
-                        client_id: settings.client_id,
-                        client_secret: settings.client_secret,
+                        client_id: process.env.VUE_APP_CLIENT_ID,
+                        client_secret: process.env.VUE_APP_CLIENT_SECRET,
                         redirect_uri: settings.redirect_uri,
                         grant_type: "authorization_code"
 

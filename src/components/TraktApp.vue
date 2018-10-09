@@ -57,12 +57,12 @@
             <div class="column list-column">
                 <div class="tabs is-centered is-boxed">
                     <ul>
-                        <li :class="{'is-active' : this.$store.userListsTab == 'collection' }">
+                        <li :class="{'is-active' : userListsTab == 'collection' }">
                             <a v-on:click="switchUserListTab('collection')">
                                 <span>Collection</span>
                             </a>
                         </li>
-                        <li :class="{'is-active' : this.$store.userListsTab == 'watchlist' }">
+                        <li :class="{'is-active' : userListsTab == 'watchlist' }">
                             <a v-on:click="switchUserListTab('watchlist')">
                                 <span>Watchlist</span>
                             </a>
@@ -191,9 +191,9 @@
                 }
             },
             switchUserListTab (tabname) {
-                if (this.$store.userListsTab!=tabname) {
+                if (this.userListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
-                    this.$store.userListsTab = tabname;
+                    this.userListsTab = tabname;
                 }
             },
             track () {

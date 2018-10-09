@@ -9,7 +9,7 @@ let axios_trakt = axios.create({
     timeout: 15000,
     headers: {
         'Content-type': 'application/json',
-        'trakt-api-key': 'ca9dff34914b04651bad7540e573ea6ba39c41e6d7e4772522b96119a62606a2',
+        'trakt-api-key': process.env.VUE_APP_CLIENT_ID,
         'trakt-api-version': 2,
         'Authorization' : 'Bearer '+trakt_access_token
     }

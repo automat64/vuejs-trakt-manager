@@ -47,8 +47,8 @@
                     url: 'oauth/token',
                     data: {
                         refresh_token: this.refresh_token,
-                        client_id: settings.client_id,
-                        client_secret: settings.client_secret,
+                        client_id: process.env.VUE_APP_CLIENT_ID,
+                        client_secret: process.env.VUE_APP_CLIENT_SECRET,
                         redirect_uri: settings.redirect_uri,
                         grant_type: "refresh_token"
 
