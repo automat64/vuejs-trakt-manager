@@ -266,7 +266,7 @@
                     
                     services.axios_trakt({
                         method: 'get',
-                        url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=true&specials=true&count_specials=true',
+                        url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
                         data: {
                             token: that.access_token,
                         }
@@ -290,7 +290,7 @@
             })
             .catch(function (error) {
                 console.log(error);
-                that.initApp();
+                //that.initApp();
             });
 
 

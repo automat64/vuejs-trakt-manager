@@ -15,12 +15,14 @@ let axios_trakt = axios.create({
     }
 });
 let axios_fanart = axios.create({
+    crossdomain: true,
     baseURL: 'http://webservice.fanart.tv/v3/',
     timeout: 15000,
     headers: {
     }
 });
 let axios_tvdb = axios.create({
+    crossdomain: true,
     baseURL: 'https://api.themoviedb.org/3/',
     timeout: 15000,
     // headers: {
