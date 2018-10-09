@@ -2,11 +2,11 @@
 import 'bulma/css/bulma.css'
 
 import Vue from 'vue';
-import Vuex from 'vuex'
 import VueRouter from 'vue-router';
 import Notifications from 'vue-notification'
 
 import App from './components/App.vue';
+import store from './store'
 import TraktAuthorize from './components/TraktAuthorize.vue';
 import TraktApp from './components/TraktApp.vue';
 import AppInit from './components/AppInit.vue';
@@ -15,7 +15,6 @@ import VueAnalytics from 'vue-analytics'
 
 
 Vue.use(VueRouter);
-Vue.use(Vuex);
 Vue.use(Notifications)
 
 const router = new VueRouter({
@@ -34,16 +33,7 @@ Vue.use(VueAnalytics, {
     router
 })
 
-const store = new Vuex.Store({
-    state: {
-      count: 2
-    },
-    mutations: {
-      increment (state) {
-        state.count++;
-      }
-    }
-  })
+//
 
 new Vue({
     el: '#app',
