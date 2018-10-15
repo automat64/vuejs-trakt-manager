@@ -21,7 +21,7 @@
                 return (this.show.next_episode.season < 10 ? '0' : '') + this.show.next_episode.season;
             },
             episode () {
-                return (this.show.next_episode.season < 10 ? '0' : '') + this.show.next_episode.number;
+                return (this.show.next_episode.number < 10 ? '0' : '') + this.show.next_episode.number;
             }
         },
         created: function () {
