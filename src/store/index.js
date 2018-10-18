@@ -1,23 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import tabs from './modules/tabs'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-      count: 2,
-      traktListsTab: 'trending',
-      userListsTab: 'collection'  
+      count: 2
+    },
+    modules: {
+      tabs
     },
     mutations: {
       increment (state) {
         state.count++;
-      },
-      switchTraktListsTab (state, newTab) {
-        state.traktListsTab=newTab;
-      },
-      switchUserListsTab (state, newTab) {
-        state.userListsTab=newTab;
       }
     },
    

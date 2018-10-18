@@ -5,24 +5,24 @@
             <div class="column list-column">
                 <div class="tabs is-centered is-boxed">
                     <ul>
-                        <li :class="{'is-active' : this.$store.state.traktListsTab == 'trending' }">
+                        <li :class="{'is-active' : this.$store.state.tabs.traktListsTab == 'trending' }">
                             <a v-on:click="switchTraktListTab('trending')">
                                 <span>Trending</span>
                             </a>
                         </li>
-                        <li :class="{'is-active' : this.$store.state.traktListsTab == 'popular' }">
+                        <li :class="{'is-active' : this.$store.state.tabs.traktListsTab == 'popular' }">
                             <a v-on:click="switchTraktListTab('popular')">
                                 <span>Popular</span>
                             </a>
                         </li>
-                        <li :class="{'is-active' : this.$store.state.traktListsTab == 'recommended' }">
+                        <li :class="{'is-active' : this.$store.state.tabs.traktListsTab == 'recommended' }">
                             <a v-on:click="switchTraktListTab('recommended')">
                                 <span>Recommended</span>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="trending" :class="{'hidden' : this.$store.state.traktListsTab != 'trending' }">
+                <div class="trending" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'trending' }">
                     <div class="box">
                         <div class="title has-text-centered">TRENDING</div>
                         <trakt-show  v-on:event_child="eventChild" 
@@ -32,7 +32,7 @@
                         </trakt-show>
                     </div>
                 </div>
-                <div class="popular" :class="{'hidden' : this.$store.state.traktListsTab != 'popular' }">
+                <div class="popular" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'popular' }">
                     <div class="box">
                         <div class="title has-text-centered">POPULAR</div>
                         <trakt-show  v-on:event_child="eventChild" 
@@ -42,7 +42,7 @@
                         </trakt-show>
                     </div>
                 </div>
-                <div class="recommended" :class="{'hidden' : this.$store.state.traktListsTab != 'recommended' }">
+                <div class="recommended" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'recommended' }">
                     <div class="box">
                         <div class="title has-text-centered">RECOMMENDED</div>
                         <trakt-show  v-on:event_child="eventChild" 
@@ -57,19 +57,19 @@
             <div class="column list-column">
                 <div class="tabs is-centered is-boxed">
                     <ul>
-                        <li :class="{'is-active' : this.$store.state.userListsTab == 'collection' }">
+                        <li :class="{'is-active' : this.$store.state.tabs.userListsTab == 'collection' }">
                             <a v-on:click="switchUserListTab('collection')">
                                 <span>Collection</span>
                             </a>
                         </li>
-                        <li :class="{'is-active' : this.$store.state.userListsTab == 'watchlist' }">
+                        <li :class="{'is-active' : this.$store.state.tabs.userListsTab == 'watchlist' }">
                             <a v-on:click="switchUserListTab('watchlist')">
                                 <span>Watchlist</span>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="collection" :class="{'hidden' : this.$store.state.userListsTab != 'collection' }">
+                <div class="collection" :class="{'hidden' : this.$store.state.tabs.userListsTab != 'collection' }">
                     <div class="box">
                         <div class="title has-text-centered">COLLECTION</div>
                         <trakt-show
@@ -79,7 +79,7 @@
                         </trakt-show>
                     </div>
                 </div>
-                <div class="watchlist" :class="{'hidden' : this.$store.state.userListsTab != 'watchlist' }">
+                <div class="watchlist" :class="{'hidden' : this.$store.state.tabs.userListsTab != 'watchlist' }">
                     <div class="box">
                         <div class="title has-text-centered">WATCHLIST</div>
                         <trakt-show
@@ -186,13 +186,13 @@
             switchTraktListTab (tabname) {
                 if (this.$store.state.traktListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
-                    this.$store.commit('switchTraktListsTab', tabname);
+                    this.$store.commit('tabs/switchTraktListsTab', tabname);
                 }
             },
             switchUserListTab (tabname) {
                  if (this.$store.state.userListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
-                    this.$store.commit('switchUserListsTab', tabname);
+                    this.$store.commit('tabs/switchUserListsTab', tabname);
                 }
             },
             track () {
