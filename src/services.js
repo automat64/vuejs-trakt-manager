@@ -49,13 +49,7 @@ axiosRetry(axios_fanart, {
     retries: 1,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (response) => {  // custom
-        //console.log("retry FANART");
-        return true;
-        //return true;//response.config.method === 'POST';
-       // debugger;
-        let result = (axiosRetry.isRetryableError(response) || response.config.method === 'GET')
-        debugger;
-        return result
+        (response.response.status=="404") ? true : false;
     },
 });
 

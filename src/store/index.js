@@ -5,14 +5,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-      count: 2
+      count: 2,
+      traktListsTab: 'trending',
+      userListsTab: 'collection'  
     },
     mutations: {
       increment (state) {
         state.count++;
+      },
+      switchTraktListsTab (state, newTab) {
+        state.traktListsTab=newTab;
+      },
+      switchUserListsTab (state, newTab) {
+        state.userListsTab=newTab;
       }
     },
-    access_token: 0,
-    traktListsTab: 'trending',
-    userListsTab: 'collection'  
+   
 })
