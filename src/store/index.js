@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import tabs from './modules/tabs'
+import tabs from './modules/tabs';
+import lists from './modules/lists'
 
 Vue.use(Vuex);
 
@@ -9,7 +10,8 @@ export default new Vuex.Store({
       count: 2
     },
     modules: {
-      tabs
+      tabs,
+      lists,
     },
     mutations: {
       increment (state) {

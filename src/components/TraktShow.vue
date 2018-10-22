@@ -36,6 +36,9 @@
             };
         },
         created: function () {
+            
+        },
+        mounted: function () {
             let that = this;
             this.imdb_link="http://www.imdb.com/title/"+this.show.ids.imdb+"/"; 
             services.axios_fanart({
@@ -58,9 +61,6 @@
                 that.show.photo = that.photo;
                 //console.log("tvbanner art not found for "+that.show.title);
             });
-        },
-        mounted: function () {
-            
         },
         methods: {
             listMenu: function (e) {

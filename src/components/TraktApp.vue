@@ -26,7 +26,7 @@
                     <div class="box">
                         <div class="title has-text-centered">TRENDING</div>
                         <trakt-show  v-on:event_child="eventChild" 
-                            v-for="item in trendingList"
+                            v-for="item in this.$store.state.lists.traktLists['trendingList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
                         </trakt-show>
@@ -36,7 +36,7 @@
                     <div class="box">
                         <div class="title has-text-centered">POPULAR</div>
                         <trakt-show  v-on:event_child="eventChild" 
-                            v-for="item in popularList"
+                            v-for="item in this.$store.state.lists.traktLists['popularList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
                         </trakt-show>
@@ -46,7 +46,7 @@
                     <div class="box">
                         <div class="title has-text-centered">RECOMMENDED</div>
                         <trakt-show  v-on:event_child="eventChild" 
-                            v-for="item in recommendedList"
+                            v-for="item in this.$store.state.lists.traktLists['recommendedList']"
                             v-bind:show="item" 
                             v-bind:key="item.ids.imdb">
                         </trakt-show>
@@ -73,7 +73,7 @@
                     <div class="box">
                         <div class="title has-text-centered">COLLECTION</div>
                         <trakt-show
-                            v-for="item in collectionList"
+                            v-for="item in this.$store.state.lists.traktLists['collectionList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
                         </trakt-show>
@@ -83,7 +83,7 @@
                     <div class="box">
                         <div class="title has-text-centered">WATCHLIST</div>
                         <trakt-show
-                            v-for="item in watchList"
+                            v-for="item in this.$store.state.lists.traktLists['watchList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
                         </trakt-show>
@@ -161,16 +161,6 @@
             return {
                 access_token: 0,
                 greeting: 'Welcome to your Vue.js app!',
-                popularList: [
-                ],
-                trendingList: [
-                ],
-                recommendedList: [
-                ],
-                collectionList: [
-                ],
-                watchList: [
-                ],
                 progressList: [
                 ],
                 calendarList: [
@@ -184,13 +174,13 @@
         },
         methods: {
             switchTraktListTab (tabname) {
-                if (this.$store.state.traktListsTab!=tabname) {
+                if (this.$store.state.tabs.traktListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
                     this.$store.commit('tabs/switchTraktListsTab', tabname);
                 }
             },
             switchUserListTab (tabname) {
-                 if (this.$store.state.userListsTab!=tabname) {
+                 if (this.$store.state.tabs.userListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
                     this.$store.commit('tabs/switchUserListsTab', tabname);
                 }
@@ -258,11 +248,8 @@
                 let list = [];
                 var i = 0;
                 for (i=0;i<10;i++) {
-                    console.log(response.data[i].show.ids.trakt);
-
                     let show = response.data[i].show;
-                    
-                    
+                   
                     services.axios_trakt({
                         method: 'get',
                         url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
@@ -293,19 +280,19 @@
             });
 
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'shows/popular?extended=full',
-                data: {
+            // services.axios_trakt({
+            //     method: 'get',
+            //     url: 'shows/popular?extended=full',
+            //     data: {
 
-                }
-            }).then(function (response) {
-                that.popularList=response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-                that.initApp();
-            });
+            //     }
+            // }).then(function (response) {
+            //     that.popularList=response.data;
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            //     that.initApp();
+            // });
 
             services.axios_trakt({
                 method: 'get',
@@ -319,7 +306,7 @@
                 for (let item of response.data) {
                     list.push(item.show);
                 }
-                that.trendingList=list;
+                that.$store.commit('lists/updateList',['trendingList',list]);
             })
             .catch(function (error) {
                 console.log(error);
@@ -338,7 +325,8 @@
                 for (let item of response.data) {
                     list.push(item.show);
                 }
-                that.popularList=response.data;
+
+                that.$store.commit('lists/updateList',['popularList',response.data]);
             })
             .catch(function (error) {
                 console.log(error);
@@ -357,7 +345,7 @@
                 for (let item of response.data) {
                     list.push(item.show);
                 }
-                that.collectionList=list;
+                that.$store.commit('lists/updateList',['collectionList',list]);
             })
             .catch(function (error) {
                 console.log(error);
@@ -376,7 +364,7 @@
                 for (let item of response.data) {
                     list.push(item.show);
                 }
-                that.watchList=list;
+                that.$store.commit('lists/updateList',['watchList',list]);
             })
             .catch(function (error) {
                 console.log(error);
@@ -396,7 +384,7 @@
                 //     list.push(item.show);
                 // }
                 //that.popularList=list;
-                that.recommendedList=response.data;
+                that.$store.commit('lists/updateList',['recommendedList',response.data]);
             })
             .catch(function (error) {
                 console.log(error);

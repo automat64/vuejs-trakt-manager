@@ -92,6 +92,7 @@
                             title: 'Trakt Watchlist',
                             text: 'Item added succesfully'
                         });
+                        that.$store.commit('lists/insertItem',['watchList',that.show]);
                     }
                     else if (response.data.existing.shows==1) {
                         that.$notify({
@@ -125,11 +126,12 @@
                 }).then(function (response) {
                     console.log(response);
                     if (response.data.deleted.shows==1) {
+                        that.$store.commit('lists/removeItem',['watchList',that.show]);
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
                             title: 'Trakt Watchlist',
-                            text: 'Item deleted succesfully'
+                            text: 'Item removed succesfully'
                         });
                     }
                     else if (response.data.not_found.shows==1) {
@@ -170,20 +172,13 @@
                     }
                 }).then(function (response) {
                     console.log(response);
-                    if (response.data.added.episodes>0) {
+                    if (response.data.added.episodes>0 || response.data.updated.episodes>0) {
+                        that.$store.commit('lists/insertItem',['collectionList',that.show]);
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
                             title: 'Trakt Collection',
                             text: 'Item added succesfully'
-                        });
-                    }
-                    if (response.data.updated.episodes>0) {
-                        that.$notify({
-                            group: 'notifications',
-                            type: 'success',
-                            title: 'Trakt Collection',
-                            text: 'Item updated succesfully'
                         });
                     }
                     else if (response.data.existing.episodes>0) {
@@ -211,11 +206,12 @@
                 }).then(function (response) {
                     console.log(response);
                     if (response.data.deleted.episodes>0) {
+                        that.$store.commit('lists/removeItem',['collectionList',that.show]);
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
                             title: 'Trakt Collection',
-                            text: 'Item deleted succesfully'
+                            text: 'Item removed succesfully'
                         });
                     }
                     else if (response.data.not_found.shows==1) {
