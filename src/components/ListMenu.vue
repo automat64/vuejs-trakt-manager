@@ -1,9 +1,9 @@
 <template>
     <ul id="right-click-menu" tabindex="-1" v-click-outside="closeMenu" v-if="viewMenu" v-on:blur="closeMenu"  v-bind:style="{top:top, left:left}">
-        <li><a v-on:click="addToWatchlist">Add to Watchlist</a></li>
-        <li><a v-on:click="removeFromWatchlist">Remove from Watchlist</a></li>
-        <li><a v-on:click="addToCollection">Add to Collection</a></li>
-        <li><a v-on:click="removeFromCollection">Remove from Collection</a></li>
+        <li v-if="inWatchlist == false"><a v-on:click="addToWatchlist">Add to Watchlist</a></li>
+        <li v-if="inWatchlist == true"><a v-on:click="removeFromWatchlist">Remove from Watchlist</a></li>
+        <li v-if="inCollection == false"><a v-on:click="addToCollection">Add to Collection</a></li>
+        <li v-if="inCollection == true"><a v-on:click="removeFromCollection">Remove from Collection</a></li>
     </ul>
 </template>
 
@@ -27,28 +27,19 @@
                 left: '0px'
             }
         },
+        computed: {
+            inWatchlist () {
+                return (this.$store.state.lists.traktLists['watchList'].indexOf(this.show) > -1) ? true : false;   
+            },
+            inCollection: function () {
+                return (this.$store.state.lists.traktLists['collectionList'].indexOf(this.show) > -1) ? true : false; 
+            }
+        },
         created: function () {
-            let that=this;
-            this.$store.watch(
-                function (state) {
-                    return state.count;
-                    console.log("store state change");
-                },
-                function () {
-                    //do something on data change
-                    //debugger;
-                    that.viewMenu = false; 
-                    console.log("store data change");
-                    
-                },
-                {
-                    deep: true //add this if u need to watch object properties change etc.
-                }
-            );
+
         },
         methods: {
             setMenu: function(top, left) {
-             
                 this.top = top  + 'px';
                 this.left = left + 30 + 'px';
                 if (left>(window.innerWidth-150)) this.left = left - 260 + 'px';
@@ -63,7 +54,6 @@
                 (this.viewMenu ? this.closeMenu() : this.openMenu(e));        
             },
             openMenu: function(e) {
-                this.$store.commit('increment');
                 let that=this;
                 setTimeout(function(){ 
                     //console.log(e.target.getBoundingClientRect());

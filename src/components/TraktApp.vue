@@ -227,72 +227,115 @@
             eventChild: function(id) {
                 console.log('Event from new child component emitted', id)
             },
+            getCalendar: function() {
+                let that = this;
+                services.axios_trakt({
+                    method: 'get',
+                    url: 'calendars/my/shows/',
+                    data: {
+                        token: this.access_token,
+                    }
+                }).then(function (response) {
+                    let list = [];
+
+                    for (let item of response.data) {
+                        let episode = item['episode'];
+                        episode['aired']=item['first_aired'];
+                        episode['show']=item['show'];
+                        list.push(episode);
+                    }
+                    that.calendarList=list;
+                    console.log("calendar list updated");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getProgress: function () {
+                let that = this;
+                services.axios_trakt({
+                    method: 'get',
+                    url: '/sync/watched/shows',
+                    data: {
+                        token: this.access_token,
+                    }
+                }).then(function (response) {
+                    
+                    let list = [];
+                    var i = 0;
+                    for (i=0;i<10;i++) {
+                        let show = response.data[i].show;
+                    
+                        services.axios_trakt({
+                            method: 'get',
+                            url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
+                            data: {
+                                token: that.access_token,
+                            }
+                        }).then(function (response) {
+                            if (response.data!="") {
+                                let next_episode=response.data.next_episode;
+                                if (next_episode) {
+                                    let progress_item = {
+                                        show,
+                                        next_episode
+                                    }
+                                    list.push(progress_item);
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                    that.progressList=list;
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
         }, 
         components: {
             TraktShow, TraktUser, TraktCalendarShow, TraktProgressShow
+        },
+        created: function () {
+            let that = this;
+            this.$store.watch(
+                function (state) {
+                    return state.lists.traktLists['watchList'];
+                    
+                },
+                function () {
+                    console.log("list changed");
+                    that.getCalendar();
+                    that.getProgress();
+                },
+                {
+                    deep: false
+                }
+            );
+            this.$store.watch(
+                function (state) {
+                    return state.lists.traktLists['collectionList'];
+                    
+                },
+                function () {
+                    console.log("list changed");
+                    that.getCalendar();
+                    that.getProgress();
+                },
+                {
+                    deep: false
+                }
+            );
+
         },
         mounted: function () {
             
             let that = this;
             console.log("main template loaded");  
             this.access_token = localStorage.getItem('refresh_token'),
-
-
-            services.axios_trakt({
-                method: 'get',
-                url: '/sync/watched/shows',
-                data: {
-                    token: this.access_token,
-                }
-            }).then(function (response) {
-                let list = [];
-                var i = 0;
-                for (i=0;i<10;i++) {
-                    let show = response.data[i].show;
-                   
-                    services.axios_trakt({
-                        method: 'get',
-                        url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
-                        data: {
-                            token: that.access_token,
-                        }
-                    }).then(function (response) {
-                        if (response.data!="") {
-                            let next_episode=response.data.next_episode;
-                            if (next_episode) {
-                                let progress_item = {
-                                    show,
-                                    next_episode
-                                }
-                                that.progressList.push(progress_item);
-                            }
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                }
-
-            })
-            .catch(function (error) {
-                console.log(error);
-                //that.initApp();
-            });
-
-
-            // services.axios_trakt({
-            //     method: 'get',
-            //     url: 'shows/popular?extended=full',
-            //     data: {
-
-            //     }
-            // }).then(function (response) {
-            //     that.popularList=response.data;
-            // })
-            // .catch(function (error) {
-            //     console.log(error);
-            //     that.initApp();
-            // });
 
             services.axios_trakt({
                 method: 'get',
@@ -391,30 +434,8 @@
                 //that.initApp();
             });
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'calendars/my/shows/',
-                data: {
-                    token: this.access_token,
-                }
-            }).then(function (response) {
-                let list = [];
-
-                for (let item of response.data) {
-                    let episode = item['episode'];
-                    episode['aired']=item['first_aired'];
-                    episode['show']=item['show'];
-                    list.push(episode);
-                }
-                that.calendarList=list;
-            })
-            .catch(function (error) {
-                console.log(error);
-                that.initApp();
-            });
-
             
-    
+
         },
     }
 </script>

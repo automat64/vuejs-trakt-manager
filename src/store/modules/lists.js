@@ -17,7 +17,7 @@ const mutations = {
         state.traktLists[newData[0]].unshift(newData[1]);
     },
     removeItem (state, newData) {
-        const index = state.traktLists[newData[0]].indexOf(newData[1]);
+        let index = state.traktLists[newData[0]].indexOf(newData[1]);
         state.traktLists[newData[0]].splice(index, 1);
     },
 }

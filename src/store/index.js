@@ -7,16 +7,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-      count: 2
+       
     },
     modules: {
-      tabs,
-      lists,
+        tabs,
+        lists,
     },
     mutations: {
-      increment (state) {
-        state.count++;
-      }
+        
     },
    
 })
