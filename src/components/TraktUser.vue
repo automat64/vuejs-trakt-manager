@@ -12,7 +12,7 @@
                         <strong>{{ name }}</strong> <small>({{ username }})</small>
                     </p>
                 </div>
-                <nav class="level is-mobile">
+                <nav class="level">
                     <div class="level-left">
                         <a class="level-item"  v-on:click="deauthorizeTrakt">
                             Revoke Token

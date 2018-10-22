@@ -1,7 +1,7 @@
 <template>
-    <div id="trakt-progress-show" class="columns">
-        <div class="progress-show column is-vcentered is-half has-text-centered">{{ this.show.show.title}}&nbsp;<strong>S{{this.season}}E{{this.episode}}</strong></div >
-        <div class="progress-title column is-vcentered  has-text-centered">{{ this.show.next_episode.title}}</div >
+    <div id="trakt-progress-show" class="columns is-multiline">
+        <div class="progress-show column is-vcentered is-half-desktop is-full-tablet has-text-centered">{{ this.show.show.title}}&nbsp;<strong>S{{this.season}}E{{this.episode}}</strong></div >
+        <div class="progress-title column is-vcentered is-half-desktop is-full-tablet has-text-centered">{{ this.show.next_episode.title}}</div >
     </div>
 </template>
 

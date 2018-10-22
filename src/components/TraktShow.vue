@@ -1,6 +1,6 @@
 <template>
     <div id="trakt-show">
-        <div class="columns show-container">
+        <div class="columns is-multiline is-mobile show-container">
             <list-menu ref="menu" v-bind:show="show"></list-menu>
             <show-details ref="details" v-bind:show="show"></show-details>
             <a v-on:click="listMenu" class="button">
@@ -8,10 +8,10 @@
                   <i class="fa fa-bars"></i>
                 </span>
             </a>
-            <div class="column ">
+            <div class="column is-half-widescreen is-four-fifths-tablet is-two-fifths-mobile">
                 <a v-on:click="showModal"><img v-bind:src="photo"></a>
             </div>
-            <div class="column ">
+            <div class="column is-half-widescreen is-full-tablet is-half-mobile">
             <div class=""><a v-on:click="showModal"><h5>{{ show.title }}</h5></a></div>
             <div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a  v:if="show.trailer" v-bind:href="show.trailer" target="_blank">Trailer</a></div>
             </div>
@@ -81,6 +81,9 @@
 </script>
 
 <style lang="scss">
+#trakt-show {
+    display:flex;
+    flex-shrink: 0;
     .show-container {
         position: relative;
         h5 {
@@ -97,4 +100,5 @@
             margin-right: 10px;
         }
     }
+}
 </style>

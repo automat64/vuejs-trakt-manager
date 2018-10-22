@@ -1,6 +1,6 @@
 <template>
-    <div id="trakt-calendar-show" class="columns">
-        <div  class="calendar-date column is-vcentered is-one-fifth has-text-centered">
+    <div id="trakt-calendar-show" class="columns is-multiline">
+        <div  class="calendar-date column is-vcentered is-one-fifth-widescreen is-full-tablet has-text-centered">
             <div class="calendar-day has-text-primary is-size-4">
                 {{this.aired_day}}
             </div>
@@ -8,8 +8,8 @@
                 {{this.aired_month}}
             </div>
         </div>
-        <div class="calendar-show column is-vcentered is-two-fifths has-text-centered">{{ this.show.show.title}} S{{this.season}}E{{this.episode}}</div >
-        <div class="calendar-title column is-vcentered is-two-fifths has-text-centered">{{ this.show.title}}</div >
+        <div class="calendar-show column is-vcentered is-two-fifths-widescreen is-half-tablet has-text-centered">{{ this.show.show.title}} S{{this.season}}E{{this.episode}}</div >
+        <div class="calendar-title column is-vcentered is-two-fifths-widescreen is-half-tablet has-text-centered">{{ this.show.title}}</div >
     </div>
 </template>
 
