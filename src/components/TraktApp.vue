@@ -1,8 +1,35 @@
 <template>
     <div id="trakt-app">
         <notifications group="notifications" />
+        <nav class="navbar  is-transparent" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a v-on:click="toggleMenu" role="button" class="navbar-burger burger" v-bind:class="{ 'is-active' : navMenu  }" aria-label="menu" aria-expanded="{navMenu}" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active' : navMenu  }">
+            <div class="navbar-start">
+                <a class="navbar-item" v-on:click="switchMobilePage('traktLists')">
+                    Trakt Lists
+                </a>
+                <a class="navbar-item" v-on:click="switchMobilePage('userLists')">
+                    User Lists
+                </a>
+                <a class="navbar-item" v-on:click="switchMobilePage('otherLists')">
+                    Calendar / Progression
+                </a>
+                <a class="navbar-item" v-on:click="switchMobilePage('search')">
+                    Search / Account
+                </a>
+            </div>
+
+        </div>
+        </nav>
         <div class="columns">
-            <div class="column list-column">
+            <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='traktLists')">
                 <div class="tabs is-centered is-boxed">
                     <ul>
                         <li :class="{'is-active' : this.$store.state.tabs.traktListsTab == 'trending' }">
@@ -54,7 +81,7 @@
                 </div>
                 
             </div>
-            <div class="column list-column">
+            <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='userLists')">
                 <div class="tabs is-centered is-boxed">
                     <ul>
                         <li :class="{'is-active' : this.$store.state.tabs.userListsTab == 'collection' }">
@@ -90,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="column list-column">
+            <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='otherLists')">
                 <div class="tile is-ancestor ">
  
                     <div class="tile is-parent is-vertical my-tiles">
@@ -114,7 +141,7 @@
 
                 </div>
             </div>
-            <div class="column list-column">
+            <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='search')">
                 <div class="box">
                     <trakt-user v-bind:access_token="access_token"></trakt-user>
                 </div>
@@ -169,10 +196,29 @@
                 showInfo: [],
                 searchString: '',
                 searching: false,
-                userListsTab: 'collection'
+                viewMode: 'desktop',
+                navMenu: false
             };
         },
+        watch: {
+            '$mq.resize': function() {
+                if (this.$mq.above(768)) {
+                    this.viewMode="desktop";
+                }
+                else this.viewMode="mobile";
+            }
+        },
         methods: {
+            toggleMenu () {
+                this.navMenu = !this.navMenu;
+            },
+            switchMobilePage (pagename) {
+                if (this.$store.state.tabs.currentPage!=pagename) {
+                    console.log("switching page to "+pagename);
+                    this.$store.commit('tabs/switchMobilePage', pagename);
+                }
+                this.navMenu = false;
+            },
             switchTraktListTab (tabname) {
                 if (this.$store.state.tabs.traktListsTab!=tabname) {
                     console.log("switching tab to "+tabname);
@@ -441,6 +487,15 @@
 </script>
 
 <style lang="scss">
+    @media screen and (min-width: 768px) {
+        .navbar-burger {
+            display: none;
+        }
+        .navbar-menu, nav {
+            display: none !important;
+        }
+    }
+
     .list-column {
         max-height: 100vh;
         overflow-y: auto;

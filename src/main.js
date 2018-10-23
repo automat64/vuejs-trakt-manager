@@ -4,7 +4,7 @@ import 'bulma/css/bulma.css'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Notifications from 'vue-notification'
-
+import vMediaQuery from 'v-media-query'
 import App from './components/App.vue';
 import store from './store'
 import TraktAuthorize from './components/TraktAuthorize.vue';
@@ -16,6 +16,7 @@ import VueAnalytics from 'vue-analytics'
 
 Vue.use(VueRouter);
 Vue.use(Notifications)
+Vue.use(vMediaQuery)
 
 const router = new VueRouter({
     mode: 'history',
@@ -39,6 +40,7 @@ new Vue({
     el: '#app',
     router,
     store,
+    vMediaQuery,
     data : {
         router,
     },

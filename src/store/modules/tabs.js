@@ -1,6 +1,7 @@
 const state = {
     traktListsTab: 'trending',
-    userListsTab: 'collection'  
+    userListsTab: 'collection',
+    currentPage: 'traktLists'
 }
 
 const mutations = {
@@ -9,6 +10,9 @@ const mutations = {
     },
     switchUserListsTab (state, newTab) {
         state.userListsTab=newTab;
+    },
+    switchMobilePage (state, newPage) {
+        state.currentPage = newPage;
     }
 }
 
