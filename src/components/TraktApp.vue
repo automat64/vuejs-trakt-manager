@@ -28,7 +28,7 @@
 
         </div>
         </nav>
-        <div class="columns">
+        <div class="columns" v-bind:class="{ 'has-menu' : navMenu  }">
             <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='traktLists')">
                 <div class="tabs is-centered is-boxed">
                     <ul>
@@ -197,18 +197,26 @@
                 searchString: '',
                 searching: false,
                 viewMode: 'desktop',
-                navMenu: false
+                hasMenu: false,
+                navMenu: false,
             };
         },
         watch: {
-            '$mq.resize': function() {
-                if (this.$mq.above(768)) {
-                    this.viewMode="desktop";
-                }
-                else this.viewMode="mobile";
-            }
+            '$mq.resize': 'sreenRes'
         },
         methods: {
+            sreenRes () {
+                if (this.$mq.above(768)) {
+                    this.viewMode="desktop";
+                    this.hasMenu=false;
+                    console.log("desktop mode");
+                }
+                else {
+                    console.log("mobile mode");
+                    this.viewMode="mobile";
+                    this.hasMenu=true;
+                }
+            },
             toggleMenu () {
                 this.navMenu = !this.navMenu;
             },
@@ -346,6 +354,7 @@
             TraktShow, TraktUser, TraktCalendarShow, TraktProgressShow
         },
         created: function () {
+            this.sreenRes();
             let that = this;
             this.$store.watch(
                 function (state) {
@@ -499,6 +508,9 @@
     .list-column {
         max-height: 100vh;
         overflow-y: auto;
+    }
+    .columns.has-menu .list-column {
+        max-height: 90vh;
     }
     .hidden {
         display:none;
