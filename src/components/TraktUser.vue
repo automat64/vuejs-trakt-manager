@@ -11,15 +11,12 @@
                     <p>
                         <strong>{{ name }}</strong> <small>({{ username }})</small>
                     </p>
-                </div>
-                <nav class="level">
-                    <div class="level-left">
-                        <a class="level-item"  v-on:click="deauthorizeTrakt">
+                    <p>
+                        <a class=""  v-on:click="deauthorizeTrakt">
                             Revoke Token
                         </a>
-                        
-                    </div>
-                </nav>
+                    </p>
+                </div>
             </div>
         </article>
     </div>
@@ -40,28 +37,23 @@
               username:'loading...',
             };
         },
-        mounted: function () {
-
-        },
-        watch : {
-            access_token : function (value) {
-                let that = this;
-                services.axios_trakt({
-                    method: 'get',
-                    url: 'users/me?extended=full',
-                    data: {
-                        access_token: this.access_token,
-                    }
-                })
-                .then(function (response) {
-                    that.name=response.data.name;
-                    that.username=response.data.username;
-                    that.photo=response.data.images.avatar.full;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            }
+        created: function () {
+            let that = this;
+            services.axios_trakt({
+                method: 'get',
+                url: 'users/me?extended=full',
+                data: {
+                    access_token: this.access_token,
+                }
+            })
+            .then(function (response) {
+                that.name=response.data.name;
+                that.username=response.data.username;
+                that.photo=response.data.images.avatar.full;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         methods: {
             deauthorizeTrakt: function () {
@@ -77,7 +69,7 @@
                 .then(function (response) {
                     localStorage.removeItem("access_token");  
                     localStorage.removeItem("refresh_token");   
-                    that.$root.router.push("/authorize");
+                    that.$root.router.push("/");
                 })
                 .catch(function (error) {
                     localStorage.removeItem("access_token");  
