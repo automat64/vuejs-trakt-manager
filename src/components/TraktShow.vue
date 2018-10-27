@@ -26,6 +26,8 @@
     import ListMenu from './ListMenu.vue';
     import ShowDetails from './ShowDetails.vue';
 
+    import Fanart from "../services/fanart.js";
+
     export default {
         name: 'TraktShow',
         props: ['show'],
@@ -37,26 +39,18 @@
         },
         created: function () {
             let that = this;
+            const fanart = new Fanart();
             this.imdb_link="http://www.imdb.com/title/"+this.show.ids.imdb+"/"; 
-            services.axios_fanart({
-                method: 'get',
-                url: 'tv/'+this.show.ids.tvdb+'?api_key=3e53bdae664d5e570691c6c95becc11e&client_key=a90da1673943ed58d466f207e12668cd',
-                retryCondition: (response) => {  // custom
-                    debugger;
-                    return axiosRetry.isNetworkError(response) || response.config.method === 'GET'
-                },
-            }).then(function (response) {
-                that.photo=response.data.hdtvlogo[0].url;
-                
-                that.show.photo = that.photo;
-                that.show.poster = response.data.tvposter[0].url;
-                that.show.background = response.data.showbackground[0].url;
-                //console.log("tvbanner art found for "+that.show.title);
-            })
-            .catch(function (error) {
+            fanart.query(this.show.ids.tvdb).then(function (response) {
+                if (response.data) {
+                    that.photo=response.data.hdtvlogo[0].url;
+                    that.show.photo = that.photo;
+                    if (response.data.tvposter) that.show.poster = response.data.tvposter[0].url;
+                    if (response.data.showbackground) that.show.background = response.data.showbackground[0].url;
+                }
+            }).catch(function (error) {
                 that.photo="/no-banner.png";
                 that.show.photo = that.photo;
-                //console.log("tvbanner art not found for "+that.show.title);
             });
         },
         mounted: function () {
@@ -64,12 +58,10 @@
         },
         methods: {
             listMenu: function (e) {
-                //let that = this;
                 this.$refs.menu.clickMenu(e);
                 
             },
             showModal: function (e) {
-                //let that = this;
                 this.$refs.details.showModal(e);
                 
             },

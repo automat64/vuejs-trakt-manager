@@ -24,8 +24,7 @@
 
 <script>
 
-    import services from "../services.js";
-    import settings from "../settings.js";
+    import Trakt from "../services/trakt.js";
 
     export default {
         name: 'TraktUser',
@@ -35,48 +34,27 @@
               photo:'http://bulma.io/images/placeholders/128x128.png',
               name:'loading...',
               username:'loading...',
+              trakt: new Trakt()
             };
         },
         created: function () {
+            //this.trakt = new Trakt();
             let that = this;
-            services.axios_trakt({
-                method: 'get',
-                url: 'users/me?extended=full',
-                data: {
-                    access_token: this.access_token,
-                }
-            })
-            .then(function (response) {
+            this.trakt.user().then(function (response) {
                 that.name=response.data.name;
                 that.username=response.data.username;
                 that.photo=response.data.images.avatar.full;
-            })
-            .catch(function (error) {
+            }).catch(function (error) {
                 console.log(error);
+                that.$root.router.push("/authorize");
             });
         },
         methods: {
             deauthorizeTrakt: function () {
                 let that = this;
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'oauth/revoke',
-
-                    data: {
-                        token: this.access_token,
-                    }
+                this.trakt.deauthorize().then(function (response) {
+                   that.$root.router.push("/");
                 })
-                .then(function (response) {
-                    localStorage.removeItem("access_token");  
-                    localStorage.removeItem("refresh_token");   
-                    that.$root.router.push("/");
-                })
-                .catch(function (error) {
-                    localStorage.removeItem("access_token");  
-                    localStorage.removeItem("refresh_token");   
-                    that.$root.router.push("/authorize");
-                    console.log(error);
-                });
             },
         }
     }

@@ -23,51 +23,39 @@
 
 <script>
 
-    import services from "../services.js";
-    import settings from "../settings.js";
+    import Trakt from "../services/trakt.js";
 
     export default {
         name: 'TraktAuthorize',
         data: function() {
             return {
-                traktUrl: "https://trakt.tv/oauth/authorize?response_type=code&client_id="+process.env.VUE_APP_CLIENT_ID+"&redirect_uri="+settings.redirect_uri,
+                traktUrl: "https://trakt.tv/oauth/authorize",
                 code: 0
             };
         },
         created: function () {
-            let that=this;
-            let code = this.$route.query.code;
-            this.code=code;
-            if (code) {
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'oauth/token',
-                    data: {
-                        code: code,
-                        client_id: process.env.VUE_APP_CLIENT_ID,
-                        client_secret: process.env.VUE_APP_CLIENT_SECRET,
-                        redirect_uri: settings.redirect_uri,
-                        grant_type: "authorization_code"
 
-                  }
-                }).then(function (response) {
-                    localStorage.setItem('access_token', response['data']['access_token']);
-                    localStorage.setItem('refresh_token', response['data']['refresh_token']);
+            let that=this;
+            const trakt = new Trakt();
+            this.traktUrl = trakt.traktUrl;
+            if (this.$route.query.code) {
+                this.code = this.$route.query.code;
+                trakt.authorize(this.code).then(function (response) {
                     that.$root.router.push("/");
-                })
-                .catch(function (error) {
-                    console.log(that);
+                }).catch(function (error) {
+                    console.log(error);
                     that.$root.router.push("/authorize");
                 });
             }
+
         },
     }
 </script>
 
 <style lang="scss">
-#trakt-authorize {
-    a {
-        text-decoration: none;
+    #trakt-authorize {
+        a {
+            text-decoration: none;
+        }
     }
-}
 </style>
