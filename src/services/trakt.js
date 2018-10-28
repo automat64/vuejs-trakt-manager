@@ -21,7 +21,6 @@ export default class Trakt {
     }
 
     async authorize(code) {
-        let that = this;
         return this.axiosTrakt({
             method: 'post',
             url: 'oauth/token',
@@ -35,7 +34,6 @@ export default class Trakt {
         }).then(function (response) {
             localStorage.setItem('access_token', response['data']['access_token']);
             localStorage.setItem('refresh_token', response['data']['refresh_token']);
-            //that.traktAccessToken = response['data']['access_token'];
             return true;
         })
         .catch(function (error) {
@@ -52,7 +50,7 @@ export default class Trakt {
                 token: this.traktAccessToken,
             }
         })
-        .then(function (response) {
+        .then(function () {
             localStorage.removeItem("access_token");  
             localStorage.removeItem("refresh_token");   
             return true;

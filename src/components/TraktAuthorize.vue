@@ -40,7 +40,7 @@
             this.traktUrl = trakt.traktUrl;
             if (this.$route.query.code) {
                 this.code = this.$route.query.code;
-                trakt.authorize(this.code).then(function (response) {
+                trakt.authorize(this.code).then(function () {
                     that.$root.router.push("/");
                 }).catch(function (error) {
                     console.log(error);

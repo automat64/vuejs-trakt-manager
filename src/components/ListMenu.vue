@@ -83,7 +83,7 @@
                             text: 'Item already exists in Watchlist'
                         });
                     }
-                }).catch(function (error) {
+                }).catch(function () {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',
@@ -115,7 +115,7 @@
                             text: 'Item does not exist in Watchlist'
                         });
                     }
-                }).catch(function (error) {
+                }).catch(function () {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',
@@ -147,7 +147,7 @@
                             text: 'Item already exists in Collection'
                         });
                     }
-                }).catch(function (error) {
+                }).catch(function () {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',
@@ -179,7 +179,7 @@
                             text: 'Item does not exist in Collection'
                         });
                     }
-                }).catch(function (error) {
+                }).catch(function () {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',

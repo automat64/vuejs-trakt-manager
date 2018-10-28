@@ -43,7 +43,7 @@
                 that.show.photo = that.photo;
                 if (response.data.tvposter) that.show.poster = response.data.tvposter[0].url;
                 if (response.data.showbackground) that.show.background = response.data.showbackground[0].url;
-            }).catch(function (error) {
+            }).catch(function () {
                 that.photo="/no-banner.png";
                 that.show.photo = that.photo;
             });

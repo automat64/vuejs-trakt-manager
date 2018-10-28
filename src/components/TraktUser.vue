@@ -52,7 +52,7 @@
         methods: {
             deauthorizeTrakt: function () {
                 let that = this;
-                this.trakt.deauthorize().then(function (response) {
+                this.trakt.deauthorize().then(function () {
                    that.$root.router.push("/");
                 })
             },

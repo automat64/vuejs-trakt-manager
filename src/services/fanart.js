@@ -18,7 +18,7 @@ export default class Fanart {
         }).then(function (response) {
             return response;
         })
-        .catch(function (error) {
+        .catch(function () {
             return false;
         });
     }
