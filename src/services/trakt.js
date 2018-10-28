@@ -3,6 +3,7 @@ import axios from 'axios';
 export default class Trakt {
     
     constructor() {
+        console.log("trakt is constructing");
         this.traktAccessToken = localStorage.getItem('access_token');
         this.redirectUri = "http://"+location.hostname+(location.port ? ':'+location.port: '')+"/authorize";
         this.traktUrl = "https://trakt.tv/oauth/authorize?response_type=code&client_id="+process.env.VUE_APP_CLIENT_ID+"&redirect_uri="+this.redirectUri,
@@ -70,9 +71,6 @@ export default class Trakt {
             url: 'users/me?extended=full',
             data: {
                 access_token: this.traktAccessToken,
-            },
-            headers: {
-                'Authorization' : 'Bearer '+this.traktAccessToken
             }
         })
         .then(function (response) {
@@ -80,6 +78,107 @@ export default class Trakt {
         })
         .catch(function (error) {
             console.log(error);
+        });
+    }
+
+    async addToWatchlist(show) {
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'sync/watchlist',
+            data: {
+                shows: [show],
+            }
+        }).then(function (response) {
+            if (response.data.added.shows==1) {
+                return true;
+            }
+            else if (response.data.existing.shows==1) {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async removeFromWatchlist(show) {
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'sync/watchlist/remove',
+            data: {
+                shows: [show],
+            }
+        }).then(function (response) {
+            if (response.data.deleted.shows==1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async addToCollection(show) {
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'sync/collection',
+            data: {
+                shows: [show],
+            }
+        }).then(function (response) {
+            if (response.data.added.episodes>0 || response.data.updated.episodes>0) {
+                return true;
+            }
+            else if (response.data.existing.episodes>0) {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async removeFromCollection(show) {
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'sync/collection/remove',
+            data: {
+                shows: [show],
+            }
+        }).then(function (response) {
+            if (response.data.deleted.episodes>0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async search(query) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'search/show?extended=full&query='+query+"",
+            data: {
+            }
+        })
+        .then(function (response) {
+            let list = [];
+            for (let item of response.data) {
+                list.push(item.show);
+            }
+            return list;
+
+        })
+        .catch(function (error) {
+            console.log(error);
+            return false;
         });
     }
 }

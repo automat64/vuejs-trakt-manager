@@ -9,10 +9,10 @@
                 </span>
             </a>
             <div class="column is-half-widescreen is-four-fifths-tablet is-two-fifths-mobile">
-                <a v-on:click="showModal"><img v-bind:src="photo"></a>
+                <a v-on:click="openModal"><img v-bind:src="photo"></a>
             </div>
             <div class="column is-half-widescreen is-full-tablet is-half-mobile">
-            <div class=""><a v-on:click="showModal"><h5>{{ show.title }}</h5></a></div>
+            <div class=""><a v-on:click="openModal"><h5>{{ show.title }}</h5></a></div>
             <div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a  v:if="show.trailer" v-bind:href="show.trailer" target="_blank">Trailer</a></div>
             </div>
         </div>
@@ -21,11 +21,8 @@
 
 <script>
 
-    import services from "../services.js";
-    import settings from "../settings.js";
     import ListMenu from './ListMenu.vue';
     import ShowDetails from './ShowDetails.vue';
-
     import Fanart from "../services/fanart.js";
 
     export default {
@@ -42,12 +39,10 @@
             const fanart = new Fanart();
             this.imdb_link="http://www.imdb.com/title/"+this.show.ids.imdb+"/"; 
             fanart.query(this.show.ids.tvdb).then(function (response) {
-                if (response.data) {
-                    that.photo=response.data.hdtvlogo[0].url;
-                    that.show.photo = that.photo;
-                    if (response.data.tvposter) that.show.poster = response.data.tvposter[0].url;
-                    if (response.data.showbackground) that.show.background = response.data.showbackground[0].url;
-                }
+                that.photo=response.data.hdtvlogo[0].url;
+                that.show.photo = that.photo;
+                if (response.data.tvposter) that.show.poster = response.data.tvposter[0].url;
+                if (response.data.showbackground) that.show.background = response.data.showbackground[0].url;
             }).catch(function (error) {
                 that.photo="/no-banner.png";
                 that.show.photo = that.photo;
@@ -61,8 +56,8 @@
                 this.$refs.menu.clickMenu(e);
                 
             },
-            showModal: function (e) {
-                this.$refs.details.showModal(e);
+            openModal: function (e) {
+                this.$refs.details.openModal(e);
                 
             },
         },

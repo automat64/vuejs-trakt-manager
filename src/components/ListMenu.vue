@@ -9,10 +9,10 @@
 
 <script>
 
-    import services from "../services.js";
-    import settings from "../settings.js";
-    
+    import Trakt from "../services/trakt.js";
     import vClickOutside from 'v-click-outside';
+
+    const trakt = new Trakt();
 
     export default {
         name: 'ListMenu',
@@ -46,17 +46,14 @@
             },
             closeMenu: function() {
                 this.viewMenu = false;  
-                //this.$store.commit('increment');
             },
             clickMenu: function(e) {
-                
-               // debugger;
+
                 (this.viewMenu ? this.closeMenu() : this.openMenu(e));        
             },
             openMenu: function(e) {
                 let that=this;
                 setTimeout(function(){ 
-                    //console.log(e.target.getBoundingClientRect());
                     let bounds = e.target.getBoundingClientRect()
                     that.viewMenu = true;
 
@@ -67,15 +64,9 @@
             },
             addToWatchlist: function () {
                 let that=this;
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'sync/watchlist',
-                    data: {
-                        shows: [this.show],
-                    }
-                }).then(function (response) {
-                    console.log(response.data)
-                    if (response.data.added.shows==1) {
+
+                trakt.addToWatchlist(this.show).then(function (response) {
+                    if (response) {
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
@@ -84,7 +75,7 @@
                         });
                         that.$store.commit('lists/insertItem',['watchList',that.show]);
                     }
-                    else if (response.data.existing.shows==1) {
+                    else {
                         that.$notify({
                             group: 'notifications',
                             type: 'information',
@@ -92,9 +83,7 @@
                             text: 'Item already exists in Watchlist'
                         });
                     }
-                })
-                .catch(function (error) {
-                    console.log(error);
+                }).catch(function (error) {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',
@@ -102,34 +91,20 @@
                         text: 'Could not complete action'
                     });
                 });
-                that.viewMenu = false; 
+
+                this.viewMenu = false; 
             },
             removeFromWatchlist: function () {
-                console.log(this.show)
                 let that=this;
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'sync/watchlist/remove',
-                    data: {
-                        shows: [this.show],
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    if (response.data.deleted.shows==1) {
+
+                trakt.removeFromWatchlist(this.show).then(function (response) {
+                    if (response) {
                         that.$store.commit('lists/removeItem',['watchList',that.show]);
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
                             title: 'Trakt Watchlist',
                             text: 'Item removed succesfully'
-                        });
-                    }
-                    else if (response.data.not_found.shows==1) {
-                        that.$notify({
-                            group: 'notifications',
-                            type: 'error',
-                            title: 'Trakt Watchlist',
-                            text: 'Item does not exist'
                         });
                     }
                     else {
@@ -140,9 +115,7 @@
                             text: 'Item does not exist in Watchlist'
                         });
                     }
-                })
-                .catch(function (error) {
-                    console.log(error);
+                }).catch(function (error) {
                     that.$notify({
                         group: 'notifications',
                         type: 'error',
@@ -150,19 +123,14 @@
                         text: 'Could not complete action'
                     });
                 });
-                that.viewMenu = false; 
+
+                this.viewMenu = false; 
             },
             addToCollection: function () {
                 let that=this;
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'sync/collection',
-                    data: {
-                        shows: [this.show],
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    if (response.data.added.episodes>0 || response.data.updated.episodes>0) {
+
+                trakt.addToCollection(this.show).then(function (response) {
+                    if (response) {
                         that.$store.commit('lists/insertItem',['collectionList',that.show]);
                         that.$notify({
                             group: 'notifications',
@@ -171,7 +139,7 @@
                             text: 'Item added succesfully'
                         });
                     }
-                    else if (response.data.existing.episodes>0) {
+                    else {
                         that.$notify({
                             group: 'notifications',
                             type: 'information',
@@ -179,37 +147,28 @@
                             text: 'Item already exists in Collection'
                         });
                     }
-                })
-                .catch(function (error) {
-                    console.log(error);
+                }).catch(function (error) {
+                    that.$notify({
+                        group: 'notifications',
+                        type: 'error',
+                        title: 'Trakt error',
+                        text: 'Could not complete action'
+                    });
                 });
-                that.viewMenu = false; 
+
+                this.viewMenu = false; 
             },
             removeFromCollection: function () {
                 let that=this;
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'sync/collection/remove',
-                    data: {
-                        shows: [this.show],
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    if (response.data.deleted.episodes>0) {
+
+                trakt.removeFromCollection(this.show).then(function (response) {
+                    if (response) {
                         that.$store.commit('lists/removeItem',['collectionList',that.show]);
                         that.$notify({
                             group: 'notifications',
                             type: 'success',
                             title: 'Trakt Collection',
                             text: 'Item removed succesfully'
-                        });
-                    }
-                    else if (response.data.not_found.shows==1) {
-                        that.$notify({
-                            group: 'notifications',
-                            type: 'error',
-                            title: 'Trakt Collection',
-                            text: 'Item does not exist'
                         });
                     }
                     else {
@@ -220,11 +179,16 @@
                             text: 'Item does not exist in Collection'
                         });
                     }
-                })
-                .catch(function (error) {
-                    console.log(error);
+                }).catch(function (error) {
+                    that.$notify({
+                        group: 'notifications',
+                        type: 'error',
+                        title: 'Trakt error',
+                        text: 'Could not complete action'
+                    });
                 });
-                that.viewMenu = false; 
+
+                this .viewMenu = false; 
             },
         }
     }

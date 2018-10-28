@@ -45,24 +45,22 @@
             readableGenres: function () {
                 return this.show.genres.join(", ");
             },
-            showModal: function () {
-                console.log("show me");
+            openModal: function () {
                 this.viewDetails = true;
             },
             closeModal: function () {
-                console.log("hide me");
                 this.viewDetails = false;
             }
         },
         computed: {
-            cssProps() { return {
-                'background-image': 'url('+ this.show.background +')',
-                'background-size': 'cover',
-                'opacity' :'1'
+            cssProps() { 
+                return {
+                    'background-image': 'url('+ this.show.background +')',
+                    'background-size': 'cover',
+                    'opacity' :'1'
+                }
             }
-        }
-	}
-        
+	    }
     }
 </script>
 

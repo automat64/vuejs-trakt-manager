@@ -52,7 +52,7 @@
                 <div class="trending" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'trending' }">
                     <div class="box">
                         <div class="title has-text-centered">TRENDING</div>
-                        <trakt-show  v-on:event_child="eventChild" 
+                        <trakt-show 
                             v-for="item in this.$store.state.lists.traktLists['trendingList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
@@ -62,7 +62,7 @@
                 <div class="popular" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'popular' }">
                     <div class="box">
                         <div class="title has-text-centered">POPULAR</div>
-                        <trakt-show  v-on:event_child="eventChild" 
+                        <trakt-show 
                             v-for="item in this.$store.state.lists.traktLists['popularList']"
                             v-bind:show="item"
                             v-bind:key="item.ids.imdb">
@@ -72,7 +72,7 @@
                 <div class="recommended" :class="{'hidden' : this.$store.state.tabs.traktListsTab != 'recommended' }">
                     <div class="box">
                         <div class="title has-text-centered">RECOMMENDED</div>
-                        <trakt-show  v-on:event_child="eventChild" 
+                        <trakt-show 
                             v-for="item in this.$store.state.lists.traktLists['recommendedList']"
                             v-bind:show="item" 
                             v-bind:key="item.ids.imdb">
@@ -180,6 +180,10 @@
     import TraktCalendarShow from './TraktCalendarShow.vue';
     import TraktProgressShow from './TraktProgressShow.vue';
     import { page } from 'vue-analytics';
+    import Trakt from "../services/trakt.js";
+
+    const trakt = new Trakt();
+
     export default {
         name: 'TraktApp',
         template: '#trakt-app-template',
@@ -247,39 +251,20 @@
             },
             searchTrakt: function () {
                 let that = this;
-
-
                 if (this.searchString.length<3) {
                     this.searchResults = [];
                 }
                 else {
                     this.searching=true;
-                    services.axios_trakt({
-                        method: 'get',
-                        url: 'search/show?extended=full&query='+this.searchString+"",
-                        data: {
-
-                        }
-                    })
-                    .then(function (response) {
-                        let list = [];
-
-                        for (let item of response.data) {
-                            list.push(item.show);
-                        }
-                        
-                        that.searchResults=list;
+                    trakt.search(this.searchString).then(function(response) {
+                        that.searchResults=response;
                         that.searching=false;
-
                     })
                     .catch(function (error) {
-                        console.log(error);
+
                         that.searching=false;
                     });
                 }
-            },
-            eventChild: function(id) {
-                console.log('Event from new child component emitted', id)
             },
             getCalendar: function() {
                 let that = this;
