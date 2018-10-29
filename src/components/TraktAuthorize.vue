@@ -23,7 +23,7 @@
 
 <script>
 
-    import Trakt from "../services/trakt.js";
+   // import Trakt from "../services/trakt.js";
 
     export default {
         name: 'TraktAuthorize',
@@ -36,11 +36,11 @@
         created: function () {
 
             let that=this;
-            const trakt = new Trakt();
-            this.traktUrl = trakt.traktUrl;
+            //const trakt = new Trakt();
+            this.traktUrl = this.$root.trakt.traktUrl;
             if (this.$route.query.code) {
                 this.code = this.$route.query.code;
-                trakt.authorize(this.code).then(function () {
+                this.$root.trakt.authorize(this.code).then(function () {
                     that.$root.router.push("/");
                 }).catch(function (error) {
                     console.log(error);

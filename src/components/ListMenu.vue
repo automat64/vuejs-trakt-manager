@@ -9,10 +9,10 @@
 
 <script>
 
-    import Trakt from "../services/trakt.js";
+    //import Trakt from "../services/trakt.js";
     import vClickOutside from 'v-click-outside';
 
-    const trakt = new Trakt();
+    //const trakt = new Trakt();
 
     export default {
         name: 'ListMenu',
@@ -65,7 +65,7 @@
             addToWatchlist: function () {
                 let that=this;
 
-                trakt.addToWatchlist(this.show).then(function (response) {
+                this.$root.trakt.addToWatchlist(this.show).then(function (response) {
                     if (response) {
                         that.$notify({
                             group: 'notifications',
@@ -97,7 +97,7 @@
             removeFromWatchlist: function () {
                 let that=this;
 
-                trakt.removeFromWatchlist(this.show).then(function (response) {
+                this.$root.trakt.removeFromWatchlist(this.show).then(function (response) {
                     if (response) {
                         that.$store.commit('lists/removeItem',['watchList',that.show]);
                         that.$notify({
@@ -129,7 +129,7 @@
             addToCollection: function () {
                 let that=this;
 
-                trakt.addToCollection(this.show).then(function (response) {
+                this.$root.trakt.addToCollection(this.show).then(function (response) {
                     if (response) {
                         that.$store.commit('lists/insertItem',['collectionList',that.show]);
                         that.$notify({
@@ -161,7 +161,7 @@
             removeFromCollection: function () {
                 let that=this;
 
-                trakt.removeFromCollection(this.show).then(function (response) {
+                this.$root.trakt.removeFromCollection(this.show).then(function (response) {
                     if (response) {
                         that.$store.commit('lists/removeItem',['collectionList',that.show]);
                         that.$notify({

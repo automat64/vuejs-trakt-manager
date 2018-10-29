@@ -180,9 +180,6 @@
     import TraktCalendarShow from './TraktCalendarShow.vue';
     import TraktProgressShow from './TraktProgressShow.vue';
     import { page } from 'vue-analytics';
-    import Trakt from "../services/trakt.js";
-
-    const trakt = new Trakt();
 
     export default {
         name: 'TraktApp',
@@ -256,27 +253,20 @@
                 }
                 else {
                     this.searching=true;
-                    trakt.search(this.searchString).then(function(response) {
+                    this.$root.trakt.search(this.searchString).then(function(response) {
                         that.searchResults=response;
                         that.searching=false;
                     })
                     .catch(function (error) {
-
                         that.searching=false;
                     });
                 }
             },
             getCalendar: function() {
                 let that = this;
-                services.axios_trakt({
-                    method: 'get',
-                    url: 'calendars/my/shows/',
-                    data: {
-                        token: this.access_token,
-                    }
-                }).then(function (response) {
+                
+                this.$root.trakt.getCalendar().then(function (response) {
                     let list = [];
-
                     for (let item of response.data) {
                         let episode = item['episode'];
                         episode['aired']=item['first_aired'];
@@ -287,32 +277,20 @@
                     console.log("calendar list updated");
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    that.searching=false;
                 });
             },
             getProgress: function () {
                 let that = this;
-                services.axios_trakt({
-                    method: 'get',
-                    url: '/sync/watched/shows',
-                    data: {
-                        token: this.access_token,
-                    }
-                }).then(function (response) {
-                    
+
+                this.$root.trakt.sync().then( function (response) {
                     let list = [];
                     var i = 0;
                     for (i=0;i<10;i++) {
                         let show = response.data[i].show;
                     
-                        services.axios_trakt({
-                            method: 'get',
-                            url: 'shows/'+response.data[i].show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
-                            data: {
-                                token: that.access_token,
-                            }
-                        }).then(function (response) {
-                            if (response.data!="") {
+                        that.$root.trakt.progress(show).then(function (response) {
+                            if (response) {
                                 let next_episode=response.data.next_episode;
                                 if (next_episode) {
                                     let progress_item = {
@@ -322,13 +300,15 @@
                                     list.push(progress_item);
                                 }
                             }
+                            else {
+                                //nothing
+                            }
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
                     }
                     that.progressList=list;
-
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -375,107 +355,87 @@
             
             let that = this;
             console.log("main template loaded");  
-            this.access_token = localStorage.getItem('refresh_token'),
+            //this.access_token = localStorage.getItem('refresh_token'),
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'shows/trending?extended=full',
-                data: {
-
-                }
-            }).then(function (response) {
-                let list = [];
-
-                for (let item of response.data) {
-                    list.push(item.show);
-                }
-                that.$store.commit('lists/updateList',['trendingList',list]);
+            this.$root.trakt.traktList('trending').then( function (response) {
+                that.$store.commit('lists/updateList',['trendingList',response]);
             })
             .catch(function (error) {
                 console.log(error);
                 that.initApp();
             });
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'shows/popular?extended=full',
-                data: {
+            this.$root.trakt.traktList('popular').then( function (response) {
+                that.$store.commit('lists/updateList',['popularList',response]);
+            })
+            .catch(function (error) {
+                console.log(error);
+                that.initApp();
+            });
+            
 
-                }
-            }).then(function (response) {
-                let list = [];
+            // services.axios_trakt({
+            //     method: 'get',
+            //     url: 'shows/trending?extended=full',
+            //     data: {
 
-                for (let item of response.data) {
-                    list.push(item.show);
-                }
+            //     }
+            // }).then(function (response) {
+            //     let list = [];
 
-                that.$store.commit('lists/updateList',['popularList',response.data]);
+            //     for (let item of response.data) {
+            //         list.push(item.show);
+            //     }
+            //     that.$store.commit('lists/updateList',['trendingList',list]);
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            //     that.initApp();
+            // });
+
+            // services.axios_trakt({
+            //     method: 'get',
+            //     url: 'shows/popular?extended=full',
+            //     data: {
+
+            //     }
+            // }).then(function (response) {
+            //     let list = [];
+
+            //     for (let item of response.data) {
+            //         list.push(item.show);
+            //     }
+
+            //     that.$store.commit('lists/updateList',['popularList',response.data]);
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            //     that.initApp();
+            // });
+
+            this.$root.trakt.userList('collection').then( function (response) {
+                that.$store.commit('lists/updateList',['collectionList',response]);
             })
             .catch(function (error) {
                 console.log(error);
                 that.initApp();
             });
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'users/me/collection/shows?extended=full',
-                data: {
-                    token: this.access_token,
-                }
-            }).then(function (response) {
-                let list = [];
-
-                for (let item of response.data) {
-                    list.push(item.show);
-                }
-                that.$store.commit('lists/updateList',['collectionList',list]);
+            this.$root.trakt.userList('watchlist').then( function (response) {
+                that.$store.commit('lists/updateList',['watchList',response]);
             })
             .catch(function (error) {
                 console.log(error);
                 that.initApp();
             });
 
-            services.axios_trakt({
-                method: 'get',
-                url: 'users/me/watchlist/shows?extended=full',
-                data: {
-                    token: this.access_token,
-                }
-            }).then(function (response) {
-                let list = [];
-
-                for (let item of response.data) {
-                    list.push(item.show);
-                }
-                that.$store.commit('lists/updateList',['watchList',list]);
-            })
-            .catch(function (error) {
-                console.log(error);
-                that.initApp();
-            });
-
-            services.axios_trakt({
-                method: 'get',
-                url: 'recommendations/shows?extended=full',
-                data: {
-                    token: this.access_token,
-                }
-            }).then(function (response) {
-                let list = [];
-
-                // for (let item of response.data) {
-                //     list.push(item.show);
-                // }
-                //that.popularList=list;
+            this.$root.trakt.recommendations().then( function (response) {
                 that.$store.commit('lists/updateList',['recommendedList',response.data]);
             })
             .catch(function (error) {
                 console.log(error);
-                //that.initApp();
+                that.initApp();
             });
-
-            
-
         },
     }
 </script>

@@ -24,7 +24,7 @@
 
 <script>
 
-    import Trakt from "../services/trakt.js";
+    //import Trakt from "../services/trakt.js";
 
     export default {
         name: 'TraktUser',
@@ -33,14 +33,12 @@
             return {
               photo:'http://bulma.io/images/placeholders/128x128.png',
               name:'loading...',
-              username:'loading...',
-              trakt: new Trakt()
+              username:'loading...'
             };
         },
         created: function () {
-            //this.trakt = new Trakt();
             let that = this;
-            this.trakt.user().then(function (response) {
+            this.$root.trakt.user().then(function (response) {
                 that.name=response.data.name;
                 that.username=response.data.username;
                 that.photo=response.data.images.avatar.full;
@@ -52,7 +50,7 @@
         methods: {
             deauthorizeTrakt: function () {
                 let that = this;
-                this.trakt.deauthorize().then(function () {
+                this.$root.trakt.deauthorize().then(function () {
                    that.$root.router.push("/");
                 })
             },

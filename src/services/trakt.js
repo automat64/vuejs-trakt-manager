@@ -3,8 +3,9 @@ import axios from 'axios';
 export default class Trakt {
     
     constructor() {
-        console.log("trakt is constructing");
+        
         this.traktAccessToken = localStorage.getItem('access_token');
+        this.traktRefreshToken = localStorage.getItem('refresh_token');
         this.redirectUri = "http://"+location.hostname+(location.port ? ':'+location.port: '')+"/authorize";
         this.traktUrl = "https://trakt.tv/oauth/authorize?response_type=code&client_id="+process.env.VUE_APP_CLIENT_ID+"&redirect_uri="+this.redirectUri,
         this.axiosTrakt = axios.create({
@@ -18,9 +19,12 @@ export default class Trakt {
                 'Authorization' : 'Bearer '+this.traktAccessToken
             }
         });
+
+        console.log("trakt is constructing " + this.traktAccessToken);
     }
 
     async authorize(code) {
+        let that=this;
         return this.axiosTrakt({
             method: 'post',
             url: 'oauth/token',
@@ -34,10 +38,14 @@ export default class Trakt {
         }).then(function (response) {
             localStorage.setItem('access_token', response['data']['access_token']);
             localStorage.setItem('refresh_token', response['data']['refresh_token']);
+            that.traktAccessToken = localStorage.getItem('access_token');
+            that.traktRefreshToken = localStorage.getItem('refresh_token');
+            debugger;
             return true;
         })
         .catch(function (error) {
             console.log(error);
+            debugger;
             return false;
         });
     }
@@ -61,6 +69,34 @@ export default class Trakt {
             console.log(error);
             return false;
         });
+    }
+
+    async refresh() {
+        let that = this;
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'oauth/token',
+            data: {
+                refresh_token: this.traktRefreshToken,
+                client_id: process.env.VUE_APP_CLIENT_ID,
+                client_secret: process.env.VUE_APP_CLIENT_SECRET,
+                redirect_uri: this.redirectUri,
+                grant_type: "refresh_token"
+
+          }
+        }).then(function (response) {
+            localStorage.setItem('access_token', response['data']['access_token']);
+            localStorage.setItem('refresh_token', response['data']['refresh_token']);
+            that.traktAccessToken = localStorage.getItem('access_token');
+            that.traktRefreshToken = localStorage.getItem('refresh_token');
+            that.axiosTrakt.defaults.headers['Authorization'] = 'Bearer '+ that.traktAccessToken;
+            debugger;
+            return true;
+        })
+        .catch(function (error) {
+            debugger;
+            return error;
+        }); 
     }
 
     async user() {
@@ -177,6 +213,106 @@ export default class Trakt {
         .catch(function (error) {
             console.log(error);
             return false;
+        });
+    }
+
+    async getCalendar() {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'calendars/my/shows/',
+            data: {
+            }
+        }).then(function (response) {
+            return response;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return false;
+        });
+    }
+
+    async progress(show) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'shows/'+show.ids.trakt+'/progress/watched?hidden=false&specials=false&count_specials=false',
+            data: {
+            }
+        }).then(function (response) {
+            if (response.data!="") {
+                return response;
+            }
+            else return false;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async sync() {
+        return this.axiosTrakt({
+            method: 'get',
+            url: '/sync/watched/shows',
+            data: {
+            }
+        }).then(function (response) {
+            return response;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return error;
+        });
+    }
+
+    async userList(listName) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'users/me/'+listName+'/shows?extended=full',
+            data: {
+            }
+        }).then(function (response) {
+            let list = [];
+            for (let item of response.data) {
+                list.push(item.show);
+            }
+            return list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async traktList(listName) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'shows/'+listName+'?extended=full',
+            data: {
+            }
+        }).then(function (response) {
+            debugger;
+            if (typeof(response.data[0].show) != "undefined") {
+                let list = [];
+                for (let item of response.data) {
+                    list.push(item.show);
+                }
+                return list;
+            }
+            else return response.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    async recommendations() {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'recommendations/shows?extended=full',
+            data: {       
+            }
+        }).then(function (response) {
+            return response;
+        })
+        .catch(function (error) {
+            console.log(error);hr
         });
     }
 }

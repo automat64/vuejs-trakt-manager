@@ -20,6 +20,9 @@
 
     import services from "../services.js";
     import settings from "../settings.js";
+    //import Trakt from "../services/trakt.js";
+
+    //const trakt = new Trakt();
 
     export default {
         name: 'AppInit',
@@ -33,45 +36,27 @@
             
             let that = this;
             console.log("app init template loaded");  
-            let refresh_token = localStorage.getItem('refresh_token');
             this.app_status = "Checking refresh token";
-            if (!this.refresh_token) {
+            if (!this.$root.trakt.traktRefreshToken) {
                 this.app_status = "Refresh token not found, redirecting.";
                 this.$root.router.push("/authorize");
             }
             else {
                 this.app_status = "Refresh token found. Refreshing...";
-                console.log(this.refresh_token);
-                services.axios_trakt({
-                    method: 'post',
-                    url: 'oauth/token',
-                    data: {
-                        refresh_token: this.refresh_token,
-                        client_id: process.env.VUE_APP_CLIENT_ID,
-                        client_secret: process.env.VUE_APP_CLIENT_SECRET,
-                        redirect_uri: settings.redirect_uri,
-                        grant_type: "refresh_token"
-
-                  }
-                }).then(function (response) {
-                    localStorage.setItem('access_token', response['data']['access_token']);
-                    localStorage.setItem('refresh_token', response['data']['refresh_token']);
-                    services.axios_trakt.defaults.headers['Authorization'] = 'Bearer '+ response['data']['access_token'];
-                    that.access_token=response['data']['access_token'];
-                    that.$root.router.push("/shows");
+                this.$root.trakt.refresh().then(function (response) {
                     that.$notify({
                         group: 'notifications',
                         type: 'success',
                         title: 'Trakt authorization successful',
                         
                     });
+                    that.$root.router.push("/shows");
                 })
                 .catch(function (error) {
-                    that.$root.router.push("/authorize");
+                    console.log(error);
+                     that.$root.router.push("/authorize");
                 }); 
             }
-            
-    
         },
     }
 </script>

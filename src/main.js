@@ -4,12 +4,13 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Notifications from 'vue-notification'
 import vMediaQuery from 'v-media-query'
+import VueAnalytics from 'vue-analytics'
 import App from './components/App.vue';
-import store from './store'
 import TraktAuthorize from './components/TraktAuthorize.vue';
 import TraktApp from './components/TraktApp.vue';
 import AppInit from './components/AppInit.vue';
-import VueAnalytics from 'vue-analytics'
+import store from './store'
+import Trakt from "./services/trakt.js";
 
 Vue.use(VueRouter);
 Vue.use(Notifications)
@@ -26,6 +27,8 @@ const router = new VueRouter({
     ]
 });
 
+const trakt = new Trakt();
+
 Vue.use(VueAnalytics, {
     id: 'UA-113864962-1',
     router
@@ -38,6 +41,7 @@ new Vue({
     vMediaQuery,
     data : {
         router,
+        trakt,
     },
     render: h => h(App),
 });
