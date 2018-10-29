@@ -8,7 +8,7 @@
                         <p><span class="icon"><i class="fa fa-user-o"></i></span>Hello You</p>
                     </div>
                         <div class="message-body">
-                            <p>{{ app_status }}</p>
+                            <p>{{ appStatus }}</p>
                         </div>
                 </article>
             </div>
@@ -18,31 +18,24 @@
 
 <script>
 
-    import services from "../services.js";
-    import settings from "../settings.js";
-    //import Trakt from "../services/trakt.js";
-
-    //const trakt = new Trakt();
-
     export default {
         name: 'AppInit',
         data: function() {
             return {
-                refresh_token : localStorage.getItem('refresh_token'),
-                app_status : "Initializing App. Stand By..."
+                appStatus : "Initializing App. Stand By..."
             };
         },
         mounted: function () {
             
             let that = this;
             console.log("app init template loaded");  
-            this.app_status = "Checking refresh token";
+            this.appStatus = "Checking refresh token";
             if (!this.$root.trakt.traktRefreshToken) {
-                this.app_status = "Refresh token not found, redirecting.";
+                this.appStatus = "Refresh token not found, redirecting.";
                 this.$root.router.push("/authorize");
             }
             else {
-                this.app_status = "Refresh token found. Refreshing...";
+                this.appStatus = "Refresh token found. Refreshing...";
                 this.$root.trakt.refresh().then(function (response) {
                     that.$notify({
                         group: 'notifications',
@@ -54,7 +47,7 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                     that.$root.router.push("/authorize");
+                    that.$root.router.push("/authorize");
                 }); 
             }
         },

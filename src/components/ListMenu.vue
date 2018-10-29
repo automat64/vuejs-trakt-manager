@@ -9,10 +9,7 @@
 
 <script>
 
-    //import Trakt from "../services/trakt.js";
     import vClickOutside from 'v-click-outside';
-
-    //const trakt = new Trakt();
 
     export default {
         name: 'ListMenu',

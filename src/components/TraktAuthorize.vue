@@ -11,35 +11,29 @@
                         <div class="message-body">
                             <p>Before you continue you need to authorize your Trakt account.</p>
                             <div class="block has-text-centered">
-                                <a class="button is-primary" :href="traktUrl">Well ok then...</a>
+                                <a class="button is-primary" :href="this.$root.trakt.traktUrl">Well ok then...</a>
                             </div>
                         </div>
                 </article>
             </div>
         </div>
-        
     </div>
 </template>
 
 <script>
 
-   // import Trakt from "../services/trakt.js";
-
     export default {
         name: 'TraktAuthorize',
         data: function() {
             return {
-                traktUrl: "https://trakt.tv/oauth/authorize",
-                code: 0
+                code: this.$route.query.code
             };
         },
         created: function () {
 
             let that=this;
-            //const trakt = new Trakt();
             this.traktUrl = this.$root.trakt.traktUrl;
-            if (this.$route.query.code) {
-                this.code = this.$route.query.code;
+            if (this.code) {
                 this.$root.trakt.authorize(this.code).then(function () {
                     that.$root.router.push("/");
                 }).catch(function (error) {

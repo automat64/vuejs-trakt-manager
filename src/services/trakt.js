@@ -40,12 +40,10 @@ export default class Trakt {
             localStorage.setItem('refresh_token', response['data']['refresh_token']);
             that.traktAccessToken = localStorage.getItem('access_token');
             that.traktRefreshToken = localStorage.getItem('refresh_token');
-            debugger;
             return true;
         })
         .catch(function (error) {
             console.log(error);
-            debugger;
             return false;
         });
     }
@@ -55,6 +53,8 @@ export default class Trakt {
             method: 'post',
             url: 'oauth/revoke',
             data: {
+                client_id: process.env.VUE_APP_CLIENT_ID,
+                client_secret: process.env.VUE_APP_CLIENT_SECRET,
                 token: this.traktAccessToken,
             }
         })
@@ -90,11 +90,9 @@ export default class Trakt {
             that.traktAccessToken = localStorage.getItem('access_token');
             that.traktRefreshToken = localStorage.getItem('refresh_token');
             that.axiosTrakt.defaults.headers['Authorization'] = 'Bearer '+ that.traktAccessToken;
-            debugger;
             return true;
         })
         .catch(function (error) {
-            debugger;
             return error;
         }); 
     }
@@ -288,7 +286,6 @@ export default class Trakt {
             data: {
             }
         }).then(function (response) {
-            debugger;
             if (typeof(response.data[0].show) != "undefined") {
                 let list = [];
                 for (let item of response.data) {
@@ -312,7 +309,7 @@ export default class Trakt {
             return response;
         })
         .catch(function (error) {
-            console.log(error);hr
+            console.log(error);
         });
     }
 }

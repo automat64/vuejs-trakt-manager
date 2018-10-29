@@ -143,7 +143,7 @@
             </div>
             <div class="column list-column" v-if="viewMode == 'desktop' || (viewMode == 'mobile' && this.$store.state.tabs.currentPage=='search')">
                 <div class="box">
-                    <trakt-user v-bind:access_token="access_token"></trakt-user>
+                    <trakt-user></trakt-user>
                 </div>
                 <div class="field has-addons">
                     <p class="control is-expanded has-icons-left has-icons-right">
@@ -174,12 +174,11 @@
 
 <script>
 
-    import services from "../services.js";
     import TraktShow from './TraktShow.vue';
     import TraktUser from './TraktUser.vue';
     import TraktCalendarShow from './TraktCalendarShow.vue';
     import TraktProgressShow from './TraktProgressShow.vue';
-    import { page } from 'vue-analytics';
+    //import { page } from 'vue-analytics';
 
     export default {
         name: 'TraktApp',
@@ -187,8 +186,6 @@
         props: ['traktUrl'],
         data: function () {
             return {
-                access_token: 0,
-                greeting: 'Welcome to your Vue.js app!',
                 progressList: [
                 ],
                 calendarList: [
@@ -257,7 +254,7 @@
                         that.searchResults=response;
                         that.searching=false;
                     })
-                    .catch(function (error) {
+                    .catch(function () {
                         that.searching=false;
                     });
                 }
@@ -276,7 +273,7 @@
                     that.calendarList=list;
                     console.log("calendar list updated");
                 })
-                .catch(function (error) {
+                .catch(function () {
                     that.searching=false;
                 });
             },
@@ -353,10 +350,9 @@
         },
         mounted: function () {
             
-            let that = this;
             console.log("main template loaded");  
-            //this.access_token = localStorage.getItem('refresh_token'),
-
+            let that = this;
+            
             this.$root.trakt.traktList('trending').then( function (response) {
                 that.$store.commit('lists/updateList',['trendingList',response]);
             })
@@ -372,46 +368,6 @@
                 console.log(error);
                 that.initApp();
             });
-            
-
-            // services.axios_trakt({
-            //     method: 'get',
-            //     url: 'shows/trending?extended=full',
-            //     data: {
-
-            //     }
-            // }).then(function (response) {
-            //     let list = [];
-
-            //     for (let item of response.data) {
-            //         list.push(item.show);
-            //     }
-            //     that.$store.commit('lists/updateList',['trendingList',list]);
-            // })
-            // .catch(function (error) {
-            //     console.log(error);
-            //     that.initApp();
-            // });
-
-            // services.axios_trakt({
-            //     method: 'get',
-            //     url: 'shows/popular?extended=full',
-            //     data: {
-
-            //     }
-            // }).then(function (response) {
-            //     let list = [];
-
-            //     for (let item of response.data) {
-            //         list.push(item.show);
-            //     }
-
-            //     that.$store.commit('lists/updateList',['popularList',response.data]);
-            // })
-            // .catch(function (error) {
-            //     console.log(error);
-            //     that.initApp();
-            // });
 
             this.$root.trakt.userList('collection').then( function (response) {
                 that.$store.commit('lists/updateList',['collectionList',response]);

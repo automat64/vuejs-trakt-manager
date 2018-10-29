@@ -24,11 +24,9 @@
 
 <script>
 
-    //import Trakt from "../services/trakt.js";
-
     export default {
         name: 'TraktUser',
-        props: ['access_token'],
+        props: [],
         data: function () {
             return {
               photo:'http://bulma.io/images/placeholders/128x128.png',
