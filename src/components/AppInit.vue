@@ -30,13 +30,13 @@
             let that = this;
             console.log("app init template loaded");  
             this.appStatus = "Checking refresh token";
-            if (!this.$root.trakt.traktRefreshToken) {
+            if (this.$root.trakt.traktRefreshToken==null) {
                 this.appStatus = "Refresh token not found, redirecting.";
                 this.$root.router.push("/authorize");
             }
             else {
                 this.appStatus = "Refresh token found. Refreshing...";
-                this.$root.trakt.refresh().then(function (response) {
+                this.$root.trakt.refresh().then(function () {
                     that.$notify({
                         group: 'notifications',
                         type: 'success',

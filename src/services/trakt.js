@@ -49,24 +49,30 @@ export default class Trakt {
     }
 
     async deauthorize() {
+        let that=this;
+        this.axiosTrakt.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
         return this.axiosTrakt({
             method: 'post',
             url: 'oauth/revoke',
+            crossdomain: true,
             data: {
+                token: this.traktAccessToken,
                 client_id: process.env.VUE_APP_CLIENT_ID,
                 client_secret: process.env.VUE_APP_CLIENT_SECRET,
-                token: this.traktAccessToken,
             }
         })
-        .then(function () {
+        .then(function (response) {
             localStorage.removeItem("access_token");  
             localStorage.removeItem("refresh_token");   
-            return true;
+            that.traktAccessToken = null;
+            that.traktRefreshToken = null;
         })
         .catch(function (error) {
+            console.log(error);
             localStorage.removeItem("access_token");  
             localStorage.removeItem("refresh_token");   
-            console.log(error);
+            that.traktAccessToken = null;
+            that.traktRefreshToken = null;
             return false;
         });
     }
