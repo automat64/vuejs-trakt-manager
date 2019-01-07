@@ -134,7 +134,8 @@
                             <trakt-progress-show 
                                 v-for="item in progressList"
                                 v-bind:show="item"
-                                v-bind:key="item.next_episode.ids.trakt">
+                                v-bind:key="item.next_episode.ids.trakt" 
+                                v-on:watched="onWatched()">
                             </trakt-progress-show>
                         </div>
                     </div>
@@ -203,6 +204,9 @@
             '$mq.resize': 'sreenRes'
         },
         methods: {
+            onWatched () {
+                this.getProgress();
+            },
             sreenRes () {
                 if (this.$mq.above(768)) {
                     this.viewMode="desktop";

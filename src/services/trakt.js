@@ -305,6 +305,7 @@ export default class Trakt {
             console.log(error);
         });
     }
+
     async recommendations() {
         return this.axiosTrakt({
             method: 'get',
@@ -313,6 +314,34 @@ export default class Trakt {
             }
         }).then(function (response) {
             return response;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async scrobble(show) {
+        return this.axiosTrakt({
+            method: 'post',
+            url: 'scrobble/stop',
+            data: {  
+                "show":{
+                    "title":show.show.title
+                },
+                "episode":{
+                    "season":show.next_episode.season,
+                    "number":show.next_episode.number,
+                    "tilte":show.next_episode.title
+                },
+                "progress": 100
+            }
+        }).then(function (response) {
+            if (response.data) {
+                return response;
+            }
+            else if (response.data.existing.episodes>0) {
+                return false;
+            }
         })
         .catch(function (error) {
             console.log(error);
