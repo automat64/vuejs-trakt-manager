@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Notifications from 'vue-notification'
 import vMediaQuery from 'v-media-query'
 import VueAnalytics from 'vue-analytics'
+import { VLazyImagePlugin } from "v-lazy-image"
 import App from './components/App.vue';
 import TraktAuthorize from './components/TraktAuthorize.vue';
 import TraktApp from './components/TraktApp.vue';
@@ -15,6 +16,7 @@ import Trakt from "./services/trakt.js";
 Vue.use(VueRouter);
 Vue.use(Notifications)
 Vue.use(vMediaQuery)
+Vue.use(VLazyImagePlugin);
 
 const router = new VueRouter({
     mode: 'history',

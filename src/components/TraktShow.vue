@@ -9,7 +9,7 @@
                 </span>
             </a>
             <div class="column is-half-widescreen is-four-fifths-tablet is-two-fifths-mobile">
-                <a v-on:click="openModal"><img v-bind:src="photo"></a>
+                <a class="show-link" v-on:click="openModal"><v-lazy-image v-bind:src="photo" src-placeholder="/spinner.gif"/></a>
             </div>
             <div class="column is-half-widescreen is-full-tablet is-half-mobile">
             <div class=""><a v-on:click="openModal"><h5>{{ show.title }}</h5></a></div>
@@ -59,7 +59,7 @@
             openModal: function (e) {
                 this.$refs.details.openModal(e);
                 
-            },
+            }
         },
         components: {
             ListMenu, ShowDetails
@@ -73,6 +73,7 @@
     flex-shrink: 0;
     .show-container {
         position: relative;
+        width:100%;
         h5 {
             color:#222;
         }
@@ -87,5 +88,12 @@
             margin-right: 10px;
         }
     }
+    .show-link {
+        width: 100%;
+        display: block;
+        text-align:center;
+        min-height: 68px;
+    }
+    
 }
 </style>
