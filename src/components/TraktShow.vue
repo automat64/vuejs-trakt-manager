@@ -3,6 +3,7 @@
         <div class="columns is-multiline is-mobile show-container">
             <list-menu ref="menu" v-bind:show="show"></list-menu>
             <show-details ref="details" v-bind:show="show"></show-details>
+            <youtube-modal ref="youtube" v-bind:show="show"></youtube-modal>
             <a v-on:click="listMenu" class="button">
                 <span class="icon is-small">
                   <i class="fa fa-bars"></i>
@@ -13,7 +14,10 @@
             </div>
             <div class="column is-half-widescreen is-full-tablet is-half-mobile">
             <div class=""><a v-on:click="openModal"><h5>{{ show.title }}</h5></a></div>
-            <div class="imdb-link"><a v-bind:href="imdb_link" target="_blank">IMDB</a> <a  v:if="show.trailer" v-bind:href="show.trailer" target="_blank">Trailer</a></div>
+            <div class="imdb-link">
+                <a v-bind:href="imdb_link" target="_blank">IMDB</a> 
+                <a v:if="show.trailer" v-on:click="openVideo">Trailer</a>
+            </div>
             </div>
         </div>
     </div>
@@ -23,6 +27,7 @@
 
     import ListMenu from './ListMenu.vue';
     import ShowDetails from './ShowDetails.vue';
+    import YoutubeModal from './YoutubeModal.vue';
     import Fanart from "../services/fanart.js";
 
     export default {
@@ -59,10 +64,14 @@
             openModal: function (e) {
                 this.$refs.details.openModal(e);
                 
+            },
+            openVideo: function (e) {
+                this.$refs.youtube.openModal(e);
+                
             }
         },
         components: {
-            ListMenu, ShowDetails
+            ListMenu, ShowDetails, YoutubeModal
         },
     }
 </script>

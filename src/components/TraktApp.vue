@@ -426,7 +426,7 @@
     .my-tiles {
         .is-child {
             overflow-y: scroll;
-            min-height: 50vh;
+            min-height: 47.5vh;
         }
     }
 </style>
