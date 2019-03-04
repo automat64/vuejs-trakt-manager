@@ -6,7 +6,7 @@ export default class Trakt {
         
         this.traktAccessToken = localStorage.getItem('access_token');
         this.traktRefreshToken = localStorage.getItem('refresh_token');
-        this.redirectUri = "http://"+location.hostname+(location.port ? ':'+location.port: '')+"/authorize";
+        this.redirectUri = location.protocol+"//"+location.hostname+(location.port ? ':'+location.port: '')+"/authorize";
         this.traktUrl = "https://trakt.tv/oauth/authorize?response_type=code&client_id="+process.env.VUE_APP_CLIENT_ID+"&redirect_uri="+this.redirectUri,
         this.axiosTrakt = axios.create({
             baseURL: 'https://api.trakt.tv',

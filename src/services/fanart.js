@@ -5,7 +5,7 @@ export default class Fanart {
         this.axiosFanart = axios.create({
             method: 'get',
             crossdomain: true,
-            baseURL: 'http://webservice.fanart.tv/v3/',
+            baseURL: 'https://webservice.fanart.tv/v3/',
             timeout: 15000,
             headers: {
             }
