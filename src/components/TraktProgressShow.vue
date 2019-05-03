@@ -85,10 +85,9 @@
         display: flex;
         align-items: center;
         text-align: center;
-        justify-content: flex-start;
+        justify-content: center;
         flex-wrap : wrap;
         flex-direction: column;
-        align-content: flex-start
     }
     .calendar-date {
         flex-direction: column;
