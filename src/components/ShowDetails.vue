@@ -8,7 +8,13 @@
                 <button v-on:click="closeModal" class="delete" aria-label="close"></button>
                 </header>
                 <section class="modal-card-body">
-                    <div class="columns">
+                    <div class="tabs is-centered">
+                        <ul>
+                            <li :class="{'is-active' : this.showTab == 'about' }"><a v-on:click="switchShowTab('about')">About</a></li>
+                            <li :class="{'is-active' : this.showTab == 'episodes' }"><a v-on:click="switchShowTab('episodes')">Episodes</a></li>
+                        </ul>
+                    </div>
+                    <div class="columns show-content about-content" :class="{'hidden' : this.showTab != 'about' }">
                         <div class="column is-half">
                             <img v-bind:src="show.poster">
                         </div>
@@ -25,6 +31,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="columns episodes-content" :class="{'hidden' : this.showTab != 'episodes' }">
+                        SEASONS
+                    </div>
                 </section>
             </div>
             </div>
@@ -38,10 +47,17 @@
         props: ['show','photo'],
         data: function () {
             return {
-                viewDetails: false
+                viewDetails: false,
+                showTab: 'about',
             }
         },
         methods: {
+            switchShowTab (tabname) {
+                if (this.showTab!=tabname) {
+                    console.log("switching tab to "+tabname);
+                    this.showTab = tabname;
+                }
+            },
             readableGenres: function () {
                 return this.show.genres.join(", ");
             },
@@ -65,5 +81,7 @@
 </script>
 
 <style lang="scss">
-    
+    .hidden {
+        display:none;
+    }
 </style>

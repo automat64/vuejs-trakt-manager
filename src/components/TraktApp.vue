@@ -418,7 +418,7 @@
         max-height: 90vh;
     }
     .hidden {
-        display:none;
+        display:none !important;
     }
     .vue-notification {
         font-size: 18px;
