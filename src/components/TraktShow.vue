@@ -28,7 +28,6 @@
     import ListMenu from './ListMenu.vue';
     import ShowDetails from './ShowDetails.vue';
     import YoutubeModal from './YoutubeModal.vue';
-    import Fanart from "../services/fanart.js";
 
     export default {
         name: 'TraktShow',
@@ -41,9 +40,8 @@
         },
         created: function () {
             let that = this;
-            const fanart = new Fanart();
             this.imdb_link="http://www.imdb.com/title/"+this.show.ids.imdb+"/"; 
-            fanart.query(this.show.ids.tvdb).then(function (response) {
+            this.$root.fanart.query(this.show.ids.tvdb).then(function (response) {
                 that.photo=response.data.hdtvlogo[0].url;
                 that.show.photo = that.photo;
                 if (response.data.tvposter) that.show.poster = response.data.tvposter[0].url;

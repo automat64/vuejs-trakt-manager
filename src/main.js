@@ -12,6 +12,7 @@ import TraktApp from './components/TraktApp.vue';
 import AppInit from './components/AppInit.vue';
 import store from './store'
 import Trakt from "./services/trakt.js";
+import Fanart from "./services/fanart.js";
 
 Vue.use(VueRouter);
 Vue.use(Notifications)
@@ -30,6 +31,7 @@ const router = new VueRouter({
 });
 
 const trakt = new Trakt();
+const fanart = new Fanart();
 
 Vue.use(VueAnalytics, {
     id: 'UA-113864962-1',
@@ -44,6 +46,7 @@ new Vue({
     data : {
         router,
         trakt,
+        fanart,
     },
     render: h => h(App),
 });
