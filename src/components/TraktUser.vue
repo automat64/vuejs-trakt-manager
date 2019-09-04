@@ -29,7 +29,7 @@
         props: [],
         data: function () {
             return {
-              photo:'http://bulma.io/images/placeholders/128x128.png',
+              photo:'https://bulma.io/images/placeholders/128x128.png',
               name:'loading...',
               username:'loading...'
             };
@@ -42,7 +42,7 @@
                 that.photo=response.data.images.avatar.full;
             }).catch(function (error) {
                 console.log(error);
-                that.$root.router.push("/authorize");
+                //that.$root.router.push("/authorize");
             });
         },
         methods: {

@@ -104,7 +104,7 @@ export default class Trakt {
     }
 
     async user() {
-        return this.axiosTrakt({
+        const axios_r = await this.axiosTrakt({
             method: 'get',
             url: 'users/me?extended=full',
             data: {
@@ -112,11 +112,13 @@ export default class Trakt {
             }
         })
         .then(function (response) {
+            console.log("ok");
             return response;
         })
         .catch(function (error) {
             console.log(error);
         });
+        return axios_r;
     }
 
     async addToWatchlist(show) {
@@ -340,6 +342,47 @@ export default class Trakt {
                 return response;
             }
             else if (response.data.existing.episodes>0) {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async seasons(show) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'shows/'+show.ids.trakt+'/seasons?extended=episodes',
+            data: {  
+                
+            }
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            }
+            else if (response.data.existing.episodes>0) {
+                return false;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    async history(type, traktId) {
+        return this.axiosTrakt({
+            method: 'get',
+            url: 'users/me/history/'+type+'/'+traktId+'?limit=50',
+            data: {  
+                
+            }
+        }).then(function (response) {
+            if (response.data) {
+                //console.log(response.data)
+                return response.data;
+            }
+            else  {
                 return false;
             }
         })

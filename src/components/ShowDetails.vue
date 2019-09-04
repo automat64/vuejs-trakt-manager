@@ -32,7 +32,13 @@
                         </div>
                     </div>
                     <div class="columns episodes-content" :class="{'hidden' : this.showTab != 'episodes' }">
-                        SEASONS
+                        <div ref="collapsibles" id="accordion_first">
+                            <trakt-season 
+                                v-for="item in this.seasonData"
+                                v-bind:season="item"
+                                v-bind:key="item.ids.trakt">
+                            </trakt-season>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -41,21 +47,42 @@
 </template>
 
 <script>
-
+    import TraktSeason from './TraktSeason.vue';
+    import bulmaCollapsible from '@creativebulma/bulma-collapsible';
+    import '@creativebulma/bulma-collapsible/dist/css/bulma-collapsible.min.css';
     export default {
         name: 'ShowDetails',
         props: ['show','photo'],
         data: function () {
             return {
                 viewDetails: false,
+                seasons: false,
+                accordion: false,
                 showTab: 'about',
+                seasonData: [],
             }
+        },
+        watch: {
+            'seasonData': function (val, oldVal) {
+                if (!this.accordion) this.accordion=true;
+            },
+        },
+        updated: function () {
+           if (this.accordion) {  
+               const collapsibles = bulmaCollapsible.attach();
+               this.accordion=false;
+           }
         },
         methods: {
             switchShowTab (tabname) {
                 if (this.showTab!=tabname) {
                     console.log("switching tab to "+tabname);
                     this.showTab = tabname;
+                }
+
+                if (tabname=="episodes" && !this.seasons) {
+                    this.getSeasons();
+                    
                 }
             },
             readableGenres: function () {
@@ -66,7 +93,17 @@
             },
             closeModal: function () {
                 this.viewDetails = false;
-            }
+            },
+            getSeasons: function () {
+                let that = this;
+                this.$root.trakt.seasons(this.show).then(function (response) {
+                    //console.log(response);
+                    that.seasonData=response;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+               
+            },
         },
         computed: {
             cssProps() { 
@@ -76,11 +113,15 @@
                     'opacity' :'1'
                 }
             }
-        }
+        },
+        components: {
+            TraktSeason
+        },
     }
 </script>
 
 <style lang="scss">
+    
     .hidden {
         display:none;
     }
