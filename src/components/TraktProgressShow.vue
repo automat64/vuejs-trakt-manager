@@ -5,7 +5,7 @@
         <div class="column is-narrow is-vcentered has-text-centered">
             <a v-on:click="markWatched" class="button" title="Mark as watched">
                 <span class="icon is-small">
-                    <i class="fas fa-clock"></i>
+                    <i class="fas fa-eye"></i>
                 </span>
             </a>
         </div>

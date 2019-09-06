@@ -58,6 +58,7 @@
                 viewDetails: false,
                 seasons: false,
                 accordion: false,
+                collapsibles: false,
                 showTab: 'about',
                 seasonData: [],
             }
@@ -68,8 +69,9 @@
             },
         },
         updated: function () {
-           if (this.accordion) {  
-               const collapsibles = bulmaCollapsible.attach();
+           if (this.accordion && !this.collapsibles) {  
+               this.collapsibles = bulmaCollapsible.attach();
+               console.log(this.collapsibles);
                this.accordion=false;
            }
         },
@@ -93,6 +95,8 @@
             },
             closeModal: function () {
                 this.viewDetails = false;
+                this.accordion=false;
+                this.collapsibles=false;
             },
             getSeasons: function () {
                 let that = this;

@@ -16,7 +16,7 @@
             >
                 <div class="message-body-content">
                     <trakt-episode
-                        v-for="item in season.episodes"
+                        v-for="item in this.updSeason.episodes"
                         v-bind:episode="item"
                         v-bind:key="item.ids.trakt">
                     </trakt-episode>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-
+    import Vue from 'vue';
     import TraktEpisode from './TraktEpisode.vue';
 
     export default {
@@ -35,41 +35,29 @@
         data: function () {
             return {
                 seasonWatched: "",
+                updSeason:[],
             };
         },
         created: function () {
             let that = this;
             let episodeNumbers=[];
             this.$root.trakt.history("seasons", this.season.ids.trakt).then(function (response) {
-                // console.log(that.season.episodes);
-                // console.log(response);
-                
-                response.forEach(function (item, i) {
-                    //console.log(item);
-                    if (episodeNumbers.indexOf(item.episode.ids.trakt)==-1) episodeNumbers[item.episode.ids.trakt]=['watched'];
-                });
-                
-               // that.seasonData=response;
+                for (let item of response) {
+                    if (episodeNumbers.indexOf(item.episode.ids.trakt)==-1) episodeNumbers.push(item.episode.ids.trakt);
+                    let getEpisode = that.season.episodes.find(episode => episode.ids.trakt === item.episode.ids.trakt);
+                    if (typeof(getEpisode)!='undefined') {
+                        Vue.set(getEpisode, 'watched', true)
+                    }  
+                }
+                that.updSeason=that.season;
+                if (episodeNumbers.length==that.season.episodes.length) that.seasonWatched="WATCHED";
             }).catch(function (error) {
                 console.log(error);
             });
-            console.log(episodeNumbers.length);
-            console.log(that.season.episodes.length);
-            if (episodeNumbers.length==this.season.episodes.length) this.seasonWatched="WATCHED";
+            
         },
         methods: {
-            // listMenu: function (e) {
-            //     this.$refs.menu.clickMenu(e);
-                
-            // },
-            // openModal: function (e) {
-            //     this.$refs.details.openModal(e);
-                
-            // },
-            // openVideo: function (e) {
-            //     this.$refs.youtube.openModal(e);
-                
-            // }
+           
         },
         components: {
             TraktEpisode

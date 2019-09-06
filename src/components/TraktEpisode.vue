@@ -2,8 +2,7 @@
         <div class="episode"  id="trakt-episode">
             <div class="message-body-content">
                 <p>{{episode.title}}</p>
-                <!-- <p ref="watched">{{epWatched}}</p>
-                <p>{{episode.watched}}</p> -->
+                <p v-if="episode.watched==true">WATCHED</p>
             </div>
         </div>
 
@@ -16,7 +15,7 @@
         props: ['episode'],
         data: function () {
             return {
-               epWatched:"NO"
+                epWatched:"NO"
             };
         },
         mounted: function () {
@@ -24,7 +23,9 @@
         },
         watch: {
             'episode': function (val, oldVal) {
-                if (val.watched==true) this.epWatched=true;
+                console.log("ep changed");
+                console.log(val);
+                if (val.watched) this.epWatched="YES";
             },
         },
         methods: {
