@@ -6,6 +6,8 @@
                         Season {{season.number}} 
                     </a>
                 </p>
+                <p>{{seasonWatched}}</p>
+                
             </div>
             <div
                 v-bind:id="'collapsible-message-accordion-'+season.number"
@@ -32,24 +34,28 @@
         props: ['season'],
         data: function () {
             return {
-            
+                seasonWatched: "",
             };
         },
         created: function () {
             let that = this;
-            this.$root.trakt.history("seasons", that.season.ids.trakt).then(function (response) {
-                //console.log(response);
-                for (let item of response) {
-                    console.log(that.season.episodes[1]);
-                    that.season.episodes[1].watched="WATCHED1";
-                    console.log(item.episode.ids.trakt);
-                    that.$refs.watched[item.episode.ids.trakt].epWatched = YES ;
-                    
-                }
+            let episodeNumbers=[];
+            this.$root.trakt.history("seasons", this.season.ids.trakt).then(function (response) {
+                // console.log(that.season.episodes);
+                // console.log(response);
+                
+                response.forEach(function (item, i) {
+                    //console.log(item);
+                    if (episodeNumbers.indexOf(item.episode.ids.trakt)==-1) episodeNumbers[item.episode.ids.trakt]=['watched'];
+                });
+                
                // that.seasonData=response;
             }).catch(function (error) {
                 console.log(error);
             });
+            console.log(episodeNumbers.length);
+            console.log(that.season.episodes.length);
+            if (episodeNumbers.length==this.season.episodes.length) this.seasonWatched="WATCHED";
         },
         methods: {
             // listMenu: function (e) {

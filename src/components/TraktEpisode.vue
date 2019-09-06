@@ -16,13 +16,21 @@
         props: ['episode'],
         data: function () {
             return {
-                epWatched:"NO"
+               epWatched:"NO"
             };
         },
         mounted: function () {
             
         },
+        watch: {
+            'episode': function (val, oldVal) {
+                if (val.watched==true) this.epWatched=true;
+            },
+        },
         methods: {
+            // showAsWatched: function () {
+            //     this.epWatched=YES;
+            // }
             // listMenu: function (e) {
             //     this.$refs.menu.clickMenu(e);
                 
