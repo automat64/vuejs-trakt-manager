@@ -64,18 +64,17 @@
             }
         },
         watch: {
-            'seasonData': function (val, oldVal) {
-                if (!this.accordion) this.accordion=true;
-            },
+            
         },
         updated: function () {
-           if (this.accordion && !this.collapsibles) {  
-               this.collapsibles = bulmaCollapsible.attach();
-               console.log(this.collapsibles);
-               this.accordion=false;
-           }
+           
         },
         methods: {
+            attachCollapsibles: function () {
+                if (!this.collapsibles) { 
+                    this.collapsibles = bulmaCollapsible.attach();
+                }
+            },
             switchShowTab (tabname) {
                 if (this.showTab!=tabname) {
                     console.log("switching tab to "+tabname);

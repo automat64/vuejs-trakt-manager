@@ -51,6 +51,7 @@
                 }
                 that.updSeason=that.season;
                 if (episodeNumbers.length==that.season.episodes.length) that.seasonWatched="WATCHED";
+                that.$parent.attachCollapsibles();
             }).catch(function (error) {
                 console.log(error);
             });
