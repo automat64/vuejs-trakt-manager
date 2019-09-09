@@ -322,20 +322,21 @@ export default class Trakt {
         });
     }
 
-    async scrobble(show) {
+    async scrobble(showTraktId,season, number) {
         return this.axiosTrakt({
             method: 'post',
             url: 'scrobble/stop',
             data: {  
                 "show":{
-                    "title":show.show.title
+                    "ids": {
+                        "trakt": showTraktId
+                    }
                 },
                 "episode":{
-                    "season":show.next_episode.season,
-                    "number":show.next_episode.number,
-                    "tilte":show.next_episode.title
+                    "season":season,
+                    "number":number
                 },
-                "progress": 100
+                "progress": 100,
             }
         }).then(function (response) {
             if (response.data) {

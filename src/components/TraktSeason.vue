@@ -31,7 +31,7 @@
 
     export default {
         name: 'TraktSeason',
-        props: ['season'],
+        props: ['season','show'],
         data: function () {
             return {
                 seasonWatched: "",

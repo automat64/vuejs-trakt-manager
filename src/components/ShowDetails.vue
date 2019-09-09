@@ -36,6 +36,7 @@
                             <trakt-season 
                                 v-for="item in this.seasonData"
                                 v-bind:season="item"
+                                v-bind:show="show"
                                 v-bind:key="item.ids.trakt">
                             </trakt-season>
                         </div>
