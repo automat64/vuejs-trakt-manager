@@ -1,20 +1,20 @@
 <template>
-        <article class="message"  id="trakt-season">
-            <div class="message-header">
+        <article class=""  id="trakt-season">
+            <a class="box" v-bind:href="'#collapsible-message-accordion-'+season.number" data-action="collapse">
                 <p>
-                    <a v-bind:href="'#collapsible-message-accordion-'+season.number" data-action="collapse">
+
                         Season {{season.number}} 
-                    </a>
+
                 </p>
                 <p>{{seasonWatched}}</p>
                 
-            </div>
+            </a>
             <div
                 v-bind:id="'collapsible-message-accordion-'+season.number"
                 class="message-body is-collapsible"
                 data-parent="accordion_first"
             >
-                <div class="message-body-content">
+                <div class="card">
                     <trakt-episode
                         v-for="item in this.updSeason.episodes"
                         v-bind:episode="item"
@@ -69,5 +69,10 @@
 <style lang="scss">
     article, #accordion_first {
         width:100%;
+    }
+    #trakt-season {
+        .box {
+            margin-bottom: 0.5rem;
+        }
     }
 </style>

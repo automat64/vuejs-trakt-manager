@@ -409,7 +409,9 @@
             display: none !important;
         }
     }
-
+    .box {
+        background-color: #f7f7f7;
+    }
     .list-column {
         max-height: 100vh;
         overflow-y: auto;

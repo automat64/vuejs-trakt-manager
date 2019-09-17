@@ -4,10 +4,12 @@
         <div class="progress-title column is-vcentered   has-text-centered">{{ this.show.next_episode.title}}</div >
         <div class="column is-narrow is-vcentered has-text-centered">
             <a v-on:click="markWatched" class="button mark-watched" title="Mark as watched">
-                <p>Mark as watched</p>
                 <span class="icon is-small">
                     <i class="fas fa-eye"></i>
                 </span>
+                
+                <p>Mark watched</p>
+                
             </a>
         </div>
     </div>
@@ -43,15 +45,14 @@
             async markWatched() {
                 console.log("watch "+this.show.show.ids.trakt);
                 let that = this;
-
-                const scrobbled = await this.scrobble(this.show.show.ids.trakt,this.show.next_episode.season, this.show.next_episode.number)
+            
+                this.scrobble(this.show.show.ids.trakt,this.show.next_episode.season, this.show.next_episode.number)
                 .then(function (response) {
                     that.$emit('watched', that.show.show.ids.trakt)
                     that.$notify({
                         group: 'notifications',
                         type: 'success',
                         title: 'Marked as watched',
-                        
                     });
                 })
                 .catch(function (error) {
@@ -74,7 +75,7 @@
 #trakt-progress-show {
     border-bottom: 1px solid;
     .mark-watched p {
-        font-size: 10px;
+        font-size: 11px;
     }
     .column {
         display: flex;

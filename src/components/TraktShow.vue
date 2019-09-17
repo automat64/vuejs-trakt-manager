@@ -4,7 +4,7 @@
             <list-menu ref="menu" v-bind:show="show"></list-menu>
             <show-details ref="details" v-bind:show="show"></show-details>
             <youtube-modal ref="youtube" v-bind:show="show"></youtube-modal>
-            <a v-on:click="listMenu" class="button">
+            <a v-on:click="listMenu" class="button listmenu_button">
                 <span class="icon is-small">
                   <i class="fa fa-bars"></i>
                 </span>
@@ -84,7 +84,7 @@
         h5 {
             color:#222;
         }
-        .button {
+        .listmenu_button {
             position: absolute;
             right:0;
             top:0;
