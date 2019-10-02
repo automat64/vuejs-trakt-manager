@@ -4,7 +4,7 @@
             <div class="calendar-day has-text-primary is-size-4">
                 {{this.aired_day}}
             </div>
-            <div class="calendar-month has-text-black-ter is-size-5">
+            <div class="calendar-month has-text-black-ter is-size-6">
                 {{this.aired_month}}
             </div>
         </div>
@@ -26,11 +26,11 @@
         computed: {
             aired_day () {
                let date = new Date(this.show.aired);
-               return date.toLocaleString("en-us", { day: "numeric" });
+               return date.toLocaleString("en-us", { weekday: "short" });
             },
             aired_month: function () {
                let date = new Date(this.show.aired);
-               return date.toLocaleString("en-us", { month: "short" });
+               return date.toLocaleString("en-us", { day: "numeric" })+' '+date.toLocaleString("en-us", { month: "short" });
             },
             season: function () {
                 return (this.show.season < 10 ? '0' : '') + this.show.season;
