@@ -38,7 +38,7 @@
                     that.$root.router.push("/");
                 }).catch(function (error) {
                     console.log(error);
-                    that.$root.router.push("/authorize");
+                    that.code=false;
                 });
             }
 
