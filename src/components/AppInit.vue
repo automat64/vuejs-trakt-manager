@@ -47,7 +47,10 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                    that.$root.router.push("/authorize");
+                    this.$root.trakt.deauthorize().then(function () {
+                        that.$root.router.push("/");
+                    })
+
                 }); 
             }
         },
