@@ -48,7 +48,7 @@
                 .catch(function (error) {
                     console.log(error);
                     this.$root.trakt.deauthorize().then(function () {
-                        that.$root.router.push("/");
+                        that.$root.router.push("/authorize");
                     })
 
                 }); 

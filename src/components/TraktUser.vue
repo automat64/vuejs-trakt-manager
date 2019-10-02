@@ -49,7 +49,7 @@
             deauthorizeTrakt: function () {
                 let that = this;
                 this.$root.trakt.deauthorize().then(function () {
-                   that.$root.router.push("/");
+                   that.$root.router.push("/authorize");
                 })
             },
         }
